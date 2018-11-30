@@ -1,18 +1,19 @@
-import { Component, OnInit, AfterContentChecked } from "@angular/core";
-import "firebase/auth";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Store } from "@ngrx/store";
-import { AuthState } from "./auth/store/auth.state";
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 
-declare const firebase: any;
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AuthState } from './auth/store/auth.state';
+
+import { firebase } from '@firebase/app';
+import '@firebase/auth';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, AfterContentChecked {
-  title = "client";
+  title = 'client';
 
   logStatus: boolean = false;
 
@@ -70,11 +71,11 @@ export class AppComponent implements OnInit, AfterContentChecked {
       })
       .catch(function(error) {
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        const errorCode = error.code;
+        const errorMessage = error.message;
         // [START_EXCLUDE]
-        if (errorCode === "auth/wrong-password") {
-          alert("Wrong password.");
+        if (errorCode === 'auth/wrong-password') {
+          alert('Wrong password.');
         } else {
           alert(errorMessage);
         }

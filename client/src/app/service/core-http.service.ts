@@ -1,8 +1,10 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-declare const firebase: any;
+import { firebase } from '@firebase/app';
+import '@firebase/firestore';
+
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class CoreHttpService {
   firestore;
@@ -13,12 +15,12 @@ export class CoreHttpService {
   }
 
   addDate(addObj) {
-    return this.firestore.collection("income").add(addObj);
+    return this.firestore.collection('income').add(addObj);
   }
 
   list() {
     return this.firestore
-      .collection("income")
+      .collection('income')
       .get()
       .then(function(querySnapshot) {
         return querySnapshot;
