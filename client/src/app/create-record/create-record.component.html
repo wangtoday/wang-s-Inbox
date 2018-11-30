@@ -1,0 +1,79 @@
+<form
+  nz-form
+  [formGroup]="createForm"
+  class="create-form"
+  (ngSubmit)="submitForm()"
+>
+  <nz-form-item>
+    <nz-form-label for="" nz-col [nzSpan]="7" nzRequired>Amount</nz-form-label>
+
+    <nz-form-control nz-col [nzSpan]="17">
+      <input
+        type="text"
+        nz-input
+        formControlName="amount"
+        placeholder="amount"
+      />
+
+      <nz-form-explain
+        *ngIf="
+          createForm.get('amount').dirty && createForm.get('amount').errors
+        "
+        >Please input your amount!</nz-form-explain
+      >
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label for="" nz-col [nzSpan]="7" nzRequired>Type</nz-form-label>
+    <nz-form-control nz-col [nzSpan]="17">
+      <nz-select
+        style="width: 200px;"
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="选择收入类型"
+        formControlName="type"
+      >
+        <nz-option nzLabel="博士工资" nzValue="博士工资"></nz-option>
+        <nz-option nzLabel="程序员工资" nzValue="程序员工资"></nz-option>
+        <nz-option nzLabel="其他收入" nzValue="其他收入"></nz-option>
+      </nz-select>
+      <nz-form-explain
+        *ngIf="createForm.get('type').dirty && createForm.get('type').errors"
+        >Please input your type!</nz-form-explain
+      >
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <button nz-button class="login-form-button" [nzType]="'primary'">
+        Create!
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<ng-template #prefixUser><i nz-icon type="user"></i></ng-template>
+<ng-template #prefixLock><i nz-icon type="lock"></i></ng-template>
+
+<ng-container *ngIf="incomeList && incomeList.length > 0">
+  <nz-table
+    #basicTable
+    [nzData]="incomeList"
+    class="income-table"
+    [nzShowPagination]="false"
+  >
+    <thead>
+      <tr>
+        <th>编号</th>
+        <th>收入</th>
+        <th>类别</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ data.amount }}</td>
+        <td>{{ data.type }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</ng-container>

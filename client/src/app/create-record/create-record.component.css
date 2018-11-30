@@ -1,0 +1,17 @@
+.create-form {
+  width: 300px;
+  height: 250px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+:host /deep/ .ant-table-wrapper{
+  width: 300px;
+  height: 400px;
+  margin-right: auto;
+  margin-left: auto;
+}
