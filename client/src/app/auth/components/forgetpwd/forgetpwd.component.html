@@ -1,0 +1,41 @@
+<nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixButton">
+  <input
+    type="text"
+    style="min-width: 300px;"
+    nz-input
+    placeholder="请输入你的注册邮箱"
+    [(ngModel)]="email"
+  />
+</nz-input-group>
+<ng-template #suffixButton>
+  <button
+    nz-button
+    nzType="primary"
+    nzSize="large"
+    nzSearch="true"
+    (click)="resetPassword()"
+  >
+    重置密码
+  </button>
+</ng-template>
+
+<div style="margin-top:1rem;"></div>
+
+<nz-alert
+  nzType="error"
+  nzMessage="错误"
+  [nzDescription]="errorMessage"
+  nzShowIcon
+  *ngIf="showError"
+>
+</nz-alert>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Life in Box"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+>
+  <p>邮件已发送至该邮箱, 请按照操作重置密码</p>
+</nz-modal>

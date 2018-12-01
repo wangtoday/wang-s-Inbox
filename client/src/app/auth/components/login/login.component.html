@@ -52,7 +52,12 @@
       </label>
     </div>
     <div nz-col nzSpan="8" nzOffset="8" style=" text-align: right">
-      <a class="login-form-forgot" class="login-form-forgot">Forget Password</a>
+      <a
+        class="login-form-forgot"
+        class="login-form-forgot"
+        [routerLink]="['/auth/resetpwd']"
+        >Forget Password</a
+      >
     </div>
   </nz-form-item>
   <nz-form-item>

@@ -28,6 +28,15 @@ export function authReducer(
         }
       };
 
+    case AuthActionTypes.AUTH_LOGIN_Failure:
+      return {
+        ...state,
+        ...{
+          status: false,
+          user: null
+        }
+      };
+
     //命名为获取status, 我还是更习惯这个用法
     // NOTE: 不需要这个, 原因是我再effect里面对status的这个disptach进行操作
     // 好处就是会弹出来新的state

@@ -10,6 +10,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/auth.effects';
+import { ForgetpwdComponent } from './components/forgetpwd/forgetpwd.component';
 
 const appRoutes: Routes = [
   {
@@ -23,6 +24,10 @@ const appRoutes: Routes = [
       {
         path: 'register',
         component: SignupComponent
+      },
+      {
+        path: 'resetpwd',
+        component: ForgetpwdComponent
       }
     ]
   }
@@ -41,6 +46,11 @@ const appRoutes: Routes = [
     StoreModule.forFeature('auth', authReducer),
     EffectsModule.forFeature([AuthEffects])
   ],
-  declarations: [AuthComponent, LoginComponent, SignupComponent]
+  declarations: [
+    AuthComponent,
+    LoginComponent,
+    SignupComponent,
+    ForgetpwdComponent
+  ]
 })
 export class AuthModule {}

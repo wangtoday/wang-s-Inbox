@@ -11,15 +11,35 @@ import { Observable } from 'rxjs';
 export class AuthService {
   constructor(private authService: CoreHttpService) {}
 
+  resetPassword(email) {
+    var actionCodeSettings = {
+      url: 'www.google.com'
+    };
+    return this.authService
+      .fireAuth()
+      .sendPasswordResetEmail(email)
+      .then(function() {
+        // Email sent.
+        return true;
+      })
+      .catch(function(error) {
+        // An error happened.
+        return false;
+      });
+  }
+
   loginStatus(): Observable<any> {
     return Observable.create(obser => {
       return this.authService.fireAuth().onAuthStateChanged(
         user => {
-          let { email, uid } = user;
-          return obser.next({
-            email,
-            uid
-          });
+          if (user) {
+            let { email, uid } = user;
+            return obser.next({
+              email,
+              uid
+            });
+          }
+          return obser.next(null);
         },
         error => obser.error(null),
         () => obser.complete()

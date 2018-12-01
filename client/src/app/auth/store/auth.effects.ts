@@ -7,7 +7,8 @@ import { Action } from '@ngrx/store';
 import {
   AuthActionTypes,
   LoginSuccessAction,
-  LoginAction
+  LoginAction,
+  LoginFailtureAction
 } from './auth.actions';
 import { AuthService } from '../services/auth.service';
 
@@ -30,7 +31,10 @@ export class AuthEffects {
     mergeMap(action => {
       return this.authService.loginStatus().pipe(
         map(data => {
-          return new LoginSuccessAction(data);
+          if (data) {
+            return new LoginSuccessAction(data);
+          }
+          return new LoginFailtureAction();
         })
       );
     })
