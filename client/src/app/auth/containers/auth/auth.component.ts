@@ -12,7 +12,7 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
     // setTimeout(() => {
-      this.store.dispatch(new AuthStatusAction());
+      // this.store.dispatch(new AuthStatusAction());
     // }, 3000);
 
     // setTimeout(() => {

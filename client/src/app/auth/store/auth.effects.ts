@@ -20,7 +20,7 @@ export class AuthEffects {
     ofType(AuthActionTypes.AUTH_LOGIN),
     mergeMap((action: LoginAction) => {
       return this.authService.login(action.authenticate).then(value => {
-        return new LoginSuccessAction({ username: value });
+        return new LoginSuccessAction(value );
       });
     })
   );

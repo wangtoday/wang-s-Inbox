@@ -1,7 +1,7 @@
 <nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixButton">
   <input
     type="text"
-    style="min-width: 300px;"
+    style="min-width: 400px;"
     nz-input
     placeholder="请输入你的注册邮箱"
     [(ngModel)]="email"
@@ -13,9 +13,19 @@
     nzType="primary"
     nzSize="large"
     nzSearch="true"
+    style="border-radius:0;border-right:1px solid #B8B9BA"
     (click)="resetPassword()"
   >
     重置密码
+  </button>
+  <button
+    nz-button
+    nzType="primary"
+    nzSize="large"
+    nzSearch="true"
+    [routerLink]="['/auth']"
+  >
+    取消
   </button>
 </ng-template>
 

@@ -12,11 +12,11 @@ export function authReducer(
 ): AuthState {
   switch (action.type) {
     //   TODO: 这里后面还要进行一些操作才可以
-    case AuthActionTypes.AUTH_LOGIN:
-      return {
-        ...state
-        // modify properties here
-      };
+    // case AuthActionTypes.AUTH_LOGIN:
+    //   return {
+    //     ...state
+    //     // modify properties here
+    //   };
     // more actions
 
     case AuthActionTypes.AUTH_LOGIN_SUCCESS:
