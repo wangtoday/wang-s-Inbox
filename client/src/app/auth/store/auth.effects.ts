@@ -20,7 +20,8 @@ export class AuthEffects {
     ofType(AuthActionTypes.AUTH_LOGIN),
     mergeMap((action: LoginAction) => {
       return this.authService.login(action.authenticate).then(value => {
-        return new LoginSuccessAction(value );
+        // Note: 登录成功, 那么这里就跳转到主页面.
+        return new LoginSuccessAction(value);
       });
     })
   );

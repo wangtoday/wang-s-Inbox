@@ -5,6 +5,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { AppComponent } from "./app.component";
 
 export const rootRoutes: Routes = [
+  {path:'core',loadChildren:"./core/core.module#CoreModule"},
   { path: "auth", loadChildren: "./auth/auth.module#AuthModule" },
   { path: "", redirectTo: "/auth", pathMatch: "full" }
 ];
