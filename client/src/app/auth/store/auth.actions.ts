@@ -1,10 +1,23 @@
-import { Action } from "@ngrx/store";
+import { Action } from '@ngrx/store';
 
-export const AUTH_LOGIN = "[AUTH] login";
-
-export class LoginAction implements Action {
-  readonly type: string;
-  constructor(public authenticate: any) {}
+export enum AuthActionTypes {
+  AUTH_LOGIN = '[AUTH] login',
+  AUTH_LOGIN_SUCCESS = '[AUTH] login success',
+  AUTH_STATUS = '[AUTH] status'
 }
 
-export type AuthAction = LoginAction;
+export class LoginAction implements Action {
+  readonly type: string = AuthActionTypes.AUTH_LOGIN;
+  constructor(public authenticate: { email: string; password: string }) {}
+}
+
+export class LoginSuccessAction implements Action {
+  readonly type: string = AuthActionTypes.AUTH_LOGIN_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class AuthStatusAction implements Action {
+  readonly type: string = AuthActionTypes.AUTH_STATUS;
+}
+
+export type AuthAction = LoginAction | LoginSuccessAction | AuthStatusAction;

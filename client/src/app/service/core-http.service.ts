@@ -14,6 +14,14 @@ export class CoreHttpService {
     this.firestore.settings(settings);
   }
 
+  fireAuth() {
+    return firebase.auth();
+  }
+
+  fireStore() {
+    return this.fireStore;
+  }
+
   addDate(addObj) {
     return this.firestore.collection('income').add(addObj);
   }

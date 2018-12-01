@@ -1,25 +1,27 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { AuthComponent } from "./components/auth/auth.component";
-import { Routes, RouterModule } from "@angular/router";
-import { LoginComponent } from "./containers/login/login.component";
-import { SignupComponent } from "./containers/signup/signup.component";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { NgZorroAntdModule } from "ng-zorro-antd";
-import { StoreModule } from "@ngrx/store";
-import { authReducer } from "./store/auth.reducer";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { StoreModule } from '@ngrx/store';
+import { authReducer } from './store/auth.reducer';
+import { AuthComponent } from './containers/auth/auth.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './store/auth.effects';
 
 const appRoutes: Routes = [
   {
-    path: "",
+    path: '',
     component: AuthComponent,
     children: [
       {
-        path: "",
+        path: '',
         component: LoginComponent
       },
       {
-        path: "register",
+        path: 'register',
         component: SignupComponent
       }
     ]
@@ -36,7 +38,8 @@ const appRoutes: Routes = [
 
     // store module
     // StoreModule.forFeature("auth", authReducer)
-    StoreModule.forFeature("auth", authReducer)
+    StoreModule.forFeature('auth', authReducer),
+    EffectsModule.forFeature([AuthEffects])
   ],
   declarations: [AuthComponent, LoginComponent, SignupComponent]
 })
