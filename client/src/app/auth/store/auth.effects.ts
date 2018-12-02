@@ -1,16 +1,26 @@
-import { Injectable } from '@angular/core';
-import { Effect, Actions, ofType } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { Effect, Actions, ofType } from "@ngrx/effects";
+import { Observable, of } from "rxjs";
+import {
+  catchError,
+  map,
+  mergeMap,
+  concatMap,
+  switchMap,
+  concatMapTo,
+  flatMap
+} from "rxjs/operators";
 
-import { Action } from '@ngrx/store';
+import { Action } from "@ngrx/store";
 import {
   AuthActionTypes,
   LoginSuccessAction,
   LoginAction,
-  LoginFailtureAction
-} from './auth.actions';
-import { AuthService } from '../services/auth.service';
+  LoginFailtureAction,
+  AuthStatusAction
+} from "./auth.actions";
+import { AuthService } from "../services/auth.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class AuthEffects {
@@ -18,28 +28,55 @@ export class AuthEffects {
   @Effect()
   login$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActionTypes.AUTH_LOGIN),
-    mergeMap((action: LoginAction) => {
-      return this.authService.login(action.authenticate).then(value => {
-        // Note: 登录成功, 那么这里就跳转到主页面.
-        return new LoginSuccessAction(value);
-      });
+    flatMap((action: LoginAction) =>
+      this.authService.login(action.authenticate)
+    ),
+    flatMap((result: any) => {
+      // console.log("第一个obv", result);
+      return this.authService.userdeatail(result.uid).pipe(
+        map(rr => {
+          // navigate to the core page
+          return new LoginSuccessAction(rr);
+        })
+      );
+      // Note: 登录成功, 那么这里就跳转到主页面.
+    })
+  );
+
+  @Effect({ dispatch: false })
+  loginSuccess$ = this.actions$.pipe(
+    ofType(AuthActionTypes.AUTH_LOGIN_SUCCESS),
+    map(result => {
+      this.router.navigateByUrl("/core");
+      // console.log("result:", result);
     })
   );
 
   @Effect()
   status$: Observable<Action> = this.actions$.pipe(
-    ofType(AuthActionTypes.AUTH_STATUS),
-    mergeMap(action => {
-      return this.authService.loginStatus().pipe(
+    ofType(AuthActionTypes.AUTH_STATUS_CHECK),
+    mergeMap(action => this.authService.loginStatus()),
+    mergeMap(result => {
+      return this.authService.userdeatail(result.uid).pipe(
         map(data => {
+          // console.log("", data);
           if (data) {
-            return new LoginSuccessAction(data);
+            // console.log(data);
+            return new AuthStatusAction({
+              status: true,
+              user: data
+            });
           }
+          // todo: 这个地方后面再进行操作吧
           return new LoginFailtureAction();
         })
       );
     })
   );
 
-  constructor(private actions$: Actions, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private actions$: Actions,
+    private authService: AuthService
+  ) {}
 }

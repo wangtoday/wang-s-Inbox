@@ -1,10 +1,11 @@
-import { initialState, AuthState } from './auth.state';
+import { initialState, AuthState } from "./auth.state";
 import {
   AuthAction,
   AuthActionTypes,
-  LoginSuccessAction
-} from './auth.actions';
-import { ActionReducerMap } from '@ngrx/store';
+  LoginSuccessAction,
+  AuthStatusAction
+} from "./auth.actions";
+import { ActionReducerMap } from "@ngrx/store";
 
 export function authReducer(
   state: AuthState = initialState,
@@ -34,6 +35,15 @@ export function authReducer(
         ...{
           status: false,
           user: null
+        }
+      };
+
+    case AuthActionTypes.AUTH_STATUS:
+      return {
+        ...state,
+        ...{
+          status: (<AuthStatusAction>action).payload.status,
+          user: (<AuthStatusAction>action).payload.user
         }
       };
 

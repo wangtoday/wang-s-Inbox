@@ -1,0 +1,8 @@
+:host /deep/ .ant-menu-item {
+  user-select: none;
+}
+
+:host /deep/ .ant-menu-item:focus {
+  border: none;
+  outline: none;
+}

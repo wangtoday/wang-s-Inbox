@@ -5,9 +5,17 @@
     [nzTheme]="'dark'"
     [nzMode]="'horizontal'"
     style="line-height: 64px;"
+    *ngIf="(store.select('auth') | async) as storeOBJ"
   >
-    <li nz-menu-item>nav 1</li>
-    <li nz-menu-item>nav 2</li>
-    <li nz-menu-item>nav 3</li>
+    <ng-container *ngIf="storeOBJ.status">
+      <li
+        nz-menu-item
+        *ngFor="let nav of storeOBJ.user.active"
+        [routerLink]="'/core/' + nav"
+        routerLinkActive="active-link"
+      >
+        {{ nav === "daigou" ? "代购" : nav }}
+      </li>
+    </ng-container>
   </ul>
 </nz-header>

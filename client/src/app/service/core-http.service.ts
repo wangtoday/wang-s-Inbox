@@ -19,7 +19,7 @@ export class CoreHttpService {
   }
 
   fireStore() {
-    return this.fireStore;
+    return firebase.firestore();
   }
 
   addDate(addObj) {
