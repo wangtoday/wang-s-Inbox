@@ -5,7 +5,6 @@ import {
   LoginSuccessAction,
   AuthStatusAction
 } from "./auth.actions";
-import { ActionReducerMap } from "@ngrx/store";
 
 export function authReducer(
   state: AuthState = initialState,

@@ -8,6 +8,7 @@ import { authReducer } from "../auth/store/auth.reducer";
 import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { AuthEffects } from "../auth/store/auth.effects";
+import { daigouReducer } from "../daigou/store/daigou.reducer";
 
 const coreRoutes: Routes = [
   {
@@ -39,6 +40,7 @@ const coreRoutes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(coreRoutes),
+    // StoreModule.forFeature('daigou', daigouReducer),
     StoreModule.forFeature("auth", authReducer),
     EffectsModule.forFeature([AuthEffects]),
     SharedModule

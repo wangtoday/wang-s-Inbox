@@ -1,12 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { AuthState } from "src/app/auth/store/auth.state";
-import { Store } from "@ngrx/store";
-import { AuthStatusCheckAction } from "src/app/auth/store/auth.actions";
+import { Component, OnInit } from '@angular/core';
+import { AuthState } from 'src/app/auth/store/auth.state';
+import { Store } from '@ngrx/store';
+import { AuthStatusCheckAction } from 'src/app/auth/store/auth.actions';
 
 @Component({
-  selector: "app-header",
-  templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.css"]
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   // header的作用就是loading菜单, 需要动态的loading一些菜单.
@@ -17,8 +17,8 @@ export class HeaderComponent implements OnInit {
     // 不需要再这里又重新实例化一下store
     this.store.dispatch(new AuthStatusCheckAction());
 
-    this.store.select("auth").subscribe(value => {
-      console.log("status :", value);
+    this.store.select('auth').subscribe(value => {
+      console.log('status :', value);
     });
   }
 }
