@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { Effect, Actions, ofType } from "@ngrx/effects";
-import { Observable, of } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Effect, Actions, ofType } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
 import {
   catchError,
   map,
@@ -9,18 +9,18 @@ import {
   switchMap,
   concatMapTo,
   flatMap
-} from "rxjs/operators";
+} from 'rxjs/operators';
 
-import { Action } from "@ngrx/store";
+import { Action } from '@ngrx/store';
 import {
   AuthActionTypes,
   LoginSuccessAction,
   LoginAction,
   LoginFailtureAction,
   AuthStatusAction
-} from "./auth.actions";
-import { AuthService } from "../services/auth.service";
-import { Router } from "@angular/router";
+} from './auth.actions';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
@@ -47,7 +47,7 @@ export class AuthEffects {
   loginSuccess$ = this.actions$.pipe(
     ofType(AuthActionTypes.AUTH_LOGIN_SUCCESS),
     map(result => {
-      this.router.navigateByUrl("/core");
+      this.router.navigateByUrl('/core');
       // console.log("result:", result);
     })
   );

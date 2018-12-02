@@ -3,5 +3,5 @@ export interface DaiGouState {
 }
 
 export const intitalDaiGouState: DaiGouState = {
-  list: 'wahaha'
+  list: []
 };

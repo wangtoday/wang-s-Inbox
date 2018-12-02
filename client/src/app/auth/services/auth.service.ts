@@ -1,21 +1,18 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-import { firebase } from "@firebase/app";
-import "@firebase/firestore";
-import { CoreHttpService } from "src/app/service/core-http.service";
-import { Observable, from } from "rxjs";
-import { map } from "rxjs/operators";
+import { firebase } from '@firebase/app';
+import '@firebase/firestore';
+import { CoreHttpService } from 'src/app/service/core-http.service';
+import { Observable, from } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class AuthService {
   constructor(private authService: CoreHttpService) {}
 
   resetPassword(email) {
-    var actionCodeSettings = {
-      url: "www.google.com"
-    };
     return this.authService
       .fireAuth()
       .sendPasswordResetEmail(email)
@@ -34,7 +31,7 @@ export class AuthService {
       return this.authService.fireAuth().onAuthStateChanged(
         user => {
           if (user) {
-            let { email, uid } = user;
+            const { email, uid } = user;
             return obser.next({
               email,
               uid
@@ -50,7 +47,6 @@ export class AuthService {
 
   /**
    * 把promise改成了observable的登陆
-   * @param loginObj
    */
   login(loginObj): Observable<any> {
     const { email, password } = loginObj;
@@ -60,7 +56,8 @@ export class AuthService {
 
     return observable$.pipe(
       map(result => {
-        let { email, uid } = result.user;
+        // tslint:disable-next-line:no-shadowed-variable
+        const { email, uid } = result.user;
         return {
           email,
           uid
@@ -72,10 +69,10 @@ export class AuthService {
   userdeatail(uid: string): Observable<any> {
     const db = this.authService.fireStore();
     // Create a reference to the cities collection
-    var citiesRef = db.collection("user");
+    const citiesRef = db.collection('user');
 
     // Create a query against the collection.
-    var query$ = from(citiesRef.where("userid", "==", uid).get());
+    const query$ = from(citiesRef.where('userid', '==', uid).get());
 
     return query$.pipe(
       map(value => {

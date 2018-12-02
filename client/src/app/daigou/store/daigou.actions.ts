@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
 export enum DaigouActionTypes {
-  DAIGOU_GET_LIST = '[DAIGOU] list',
+  DAIGOU_GET_LIST = '[DAIGOU] get list',
   DAIGOU_LIST = '[DAIGOU] list'
 }
 

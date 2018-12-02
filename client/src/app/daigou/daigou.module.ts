@@ -6,6 +6,8 @@ import { StoreModule } from '@ngrx/store';
 import { daigouReducer } from './store/daigou.reducer';
 import { ContainerComponent } from './container/container.component';
 import { SharedModule } from '../shared/shared.module';
+import { EffectsModule } from '@ngrx/effects';
+import { DaigouEffects } from './store/daigou.effects';
 
 const daigouRoute: Routes = [
   {
@@ -19,7 +21,8 @@ const daigouRoute: Routes = [
     CommonModule,
     SharedModule,
     RouterModule.forChild(daigouRoute),
-    StoreModule.forFeature('daigou', daigouReducer)
+    StoreModule.forFeature('daigou', daigouReducer),
+    EffectsModule.forFeature([DaigouEffects])
   ],
   declarations: [DaigouComponent, ContainerComponent]
 })

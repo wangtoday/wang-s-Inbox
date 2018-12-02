@@ -8,6 +8,7 @@ import { DgGetListAction } from '../../store/daigou.actions';
   styleUrls: ['./daigou.component.css']
 })
 export class DaigouComponent implements OnInit {
+  // tslint:disable-next-line:no-input-rename
   @Input('userid') userid: any = '';
   constructor(public store: Store<any>) {}
 
