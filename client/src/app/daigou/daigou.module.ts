@@ -8,6 +8,8 @@ import { ContainerComponent } from './container/container.component';
 import { SharedModule } from '../shared/shared.module';
 import { EffectsModule } from '@ngrx/effects';
 import { DaigouEffects } from './store/daigou.effects';
+import { TrackingComponent } from './components/tracking/tracking.component';
+import { TobuyComponent } from './components/tobuy/tobuy.component';
 
 const daigouRoute: Routes = [
   {
@@ -24,6 +26,6 @@ const daigouRoute: Routes = [
     StoreModule.forFeature('daigou', daigouReducer),
     EffectsModule.forFeature([DaigouEffects])
   ],
-  declarations: [DaigouComponent, ContainerComponent]
+  declarations: [DaigouComponent, ContainerComponent, TrackingComponent, TobuyComponent]
 })
 export class DaigouModule {}

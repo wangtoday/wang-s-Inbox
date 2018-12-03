@@ -1,5 +1,10 @@
-<div nz-row *ngIf="!loading">
-  <div nz-col nzSpan="4"><app-daigou [userid]="userid"></app-daigou></div>
-  <div nz-col nzSpan="10">col-8</div>
-  <div nz-col nzSpan="10">col-8</div>
+<div nz-row nzGutter="4" *ngIf="!loading">
+  <div nz-col nzXs="6" nzSm="6" nzMd="6" nzLg="6" nzXl="6" nzXXl="6">
+    <app-daigou></app-daigou>
+  </div>
+  <div nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="18" nzXXl="10">
+    <div style="height:40%"><app-tobuy></app-tobuy></div>
+    <div style="margin-bottom: 3rem;"></div>
+    <app-tracking></app-tracking>
+  </div>
 </div>

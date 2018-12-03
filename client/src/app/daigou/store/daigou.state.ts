@@ -1,7 +1,11 @@
 export interface DaiGouState {
-  list: any;
+  dUserList: any;
+  dTrackingList: any;
+  dToBuyList: any;
 }
 
 export const intitalDaiGouState: DaiGouState = {
-  list: []
+  dUserList: [],
+  dTrackingList: [],
+  dToBuyList: []
 };

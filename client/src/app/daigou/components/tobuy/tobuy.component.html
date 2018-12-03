@@ -1,0 +1,57 @@
+<h1>需要购买</h1>
+
+<nz-table
+  #trackingTable
+  [nzData]="dTobuyTable"
+  *ngIf="!loading"
+  [nzScroll]="{ y: '240px' }"
+>
+  <thead>
+    <tr>
+      <th style="word-break: keep-all;" nzWidth="80px">buyer</th>
+      <th style="word-break: keep-all;" nzWidth="250px">名称</th>
+      <th style="word-break: keep-all">数量</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of trackingTable.data">
+      <td style="word-break: keep-all;">{{ data.buyer }}</td>
+      <td style="word-break: keep-all;">{{ data.itemname }}</td>
+      <td style="word-break: keep-all;">{{ data.number }}</td>
+      <td style=" text-align: center;">
+        <button
+          nz-button
+          nzType="primary"
+          (click)="toggleToTracking(data)"
+          [nzLoading]="toggleTracking"
+        >
+          <i nz-icon type="shopping-cart" theme="outline"></i>开始追踪
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<nz-modal
+  [(nzVisible)]="toggleTracking"
+  nzTitle="添加信息"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="tracking()"
+>
+  <div style="margin-bottom: 16px;">
+    <nz-input-group [nzAddOnAfter]="addOnAfterIconTemplate">
+      <input
+        type="text"
+        nz-input
+        [(ngModel)]="trackingnumber"
+        placeholder="请输入快递单号"
+      />
+    </nz-input-group>
+    <div style="margin-top:.3rem"></div>
+    <nz-alert nzType="error" [nzMessage]="error" *ngIf="error"></nz-alert>
+    <ng-template #addOnAfterIconTemplate>
+            <i nz-icon type="barcode" theme="outline"></i>
+    </ng-template>
+  </div>
+</nz-modal>

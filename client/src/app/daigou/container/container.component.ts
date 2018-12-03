@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { valueFunctionProp } from 'ng-zorro-antd';
+import { DgGetListAction } from '../store/daigou.actions';
 
 @Component({
   selector: 'app-container',
@@ -9,7 +10,6 @@ import { valueFunctionProp } from 'ng-zorro-antd';
 })
 export class ContainerComponent implements OnInit {
   loading = true;
-  userid = '';
 
   constructor(public store: Store<any>) {}
 
@@ -17,7 +17,7 @@ export class ContainerComponent implements OnInit {
     this.store.select('auth').subscribe(value => {
       if (value.status) {
         this.loading = false;
-        this.userid = value.user.userid;
+        this.store.dispatch(new DgGetListAction(value.user.userid));
       }
     });
   }

@@ -1,3 +1,27 @@
-<p>
-  daigou works!
-</p>
+<h1>联系人</h1>
+
+<nz-collapse
+  [nzBordered]="false"
+  *ngIf="(store.select('daigou') | async).dUserList as Contactlist"
+>
+  <nz-collapse-panel
+    *ngFor="let contactItem of Contactlist"
+    [nzHeader]="contactItem.name"
+    [nzActive]="false"
+    [ngStyle]="panelStyle"
+    [nzShowArrow]="false"
+  >
+    <p>{{ contactItem.address }}</p>
+    <p>{{ contactItem.phone }}</p>
+    <div class="panel-setting-group">
+      <nz-button-group>
+        <button nz-button nzType="primary">
+          <i nz-icon type="copy" theme="outline"></i>复制
+        </button>
+        <button nz-button nzType="default">
+          <i nz-icon type="edit" theme="outline"></i>修改
+        </button>
+      </nz-button-group>
+    </div>
+  </nz-collapse-panel>
+</nz-collapse>

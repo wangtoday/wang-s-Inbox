@@ -12,7 +12,11 @@ export function daigouReducer(
   switch (action.type) {
     case DaigouActionTypes.DAIGOU_LIST:
       console.log('come DAIGOU_LIST');
-      return { list: (<DgListAction>action).payload };
+      return {
+        dUserList: (<DgListAction>action).payload.dUserList,
+        dTrackingList: (<DgListAction>action).payload.dTrackingList,
+        dToBuyList: (<DgListAction>action).payload.dToBuyList,
+      };
 
     default:
       return state;

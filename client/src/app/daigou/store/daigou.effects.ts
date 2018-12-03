@@ -6,7 +6,8 @@ import { DaigouService } from '../services/daigou.service';
 import {
   DaigouActionTypes,
   DgGetListAction,
-  DgListAction
+  DgListAction,
+  DgChangeToTracking
 } from './daigou.actions';
 import { mergeMap, map } from 'rxjs/operators';
 
@@ -16,9 +17,21 @@ export class DaigouEffects {
   getListDaigou$: Observable<Action> = this.action$.pipe(
     ofType(DaigouActionTypes.DAIGOU_GET_LIST),
     mergeMap((action: DgGetListAction) => {
-      return this.daigouService.list(action.payload).pipe(
+      return this.daigouService.consumeDaigouTable(action.payload).pipe(
         map(result => {
           return new DgListAction(result);
+        })
+      );
+    })
+  );
+
+  @Effect()
+  changeToTracking$: Observable<Action> = this.action$.pipe(
+    ofType(DaigouActionTypes.DAIGOU_CHANGE_TO_TRACKING),
+    mergeMap((action: DgChangeToTracking) => {
+      return this.daigouService.updateDaigouTable(action.payload).pipe(
+        map((result: any) => {
+          return new DgGetListAction(result);
         })
       );
     })

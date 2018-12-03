@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open",
-    "dev": "ng serve --host 0.0.0.0 --disable-host-check --proxy-config proxy.conf.json",
+    "start": "ng serve --host 0.0.0.0 --port 4200  --disableHostCheck true",
+    "dev": "concurrently  \"npm run start\" \"npm run webhoot\"",
+    "webhoot": "lt --port 4200 -s mubaba",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
