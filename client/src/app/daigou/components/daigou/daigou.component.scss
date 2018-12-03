@@ -1,0 +1,18 @@
+p {
+  font-size: 0.8rem;
+}
+
+.td-description {
+  min-width: 40px;
+  word-break: keep-all;
+  position: relative;
+  b {
+    position: absolute;
+    top: 0;
+  }
+}
+
+.td-content {
+  padding-left: 1rem;
+  position: relative;
+}

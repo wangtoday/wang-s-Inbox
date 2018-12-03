@@ -15,6 +15,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { RootRouterModule } from './root-routing';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { notificationReducer } from './store/notification.reducer';
 
 registerLocaleData(zh);
 
@@ -30,7 +31,7 @@ registerLocaleData(zh);
     RootRouterModule,
 
     // 下面是我们牛逼轰轰的store登场了
-    StoreModule.forRoot({}),
+    StoreModule.forRoot({ notification: notificationReducer }),
     EffectsModule.forRoot([]),
 
     StoreDevtoolsModule.instrument({

@@ -1,15 +1,17 @@
 import { Inject, Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { DaigouService } from '../services/daigou.service';
 import {
   DaigouActionTypes,
   DgGetListAction,
   DgListAction,
-  DgChangeToTracking
+  DgChangeToTracking,
+  DgAddToBuyAction
 } from './daigou.actions';
 import { mergeMap, map } from 'rxjs/operators';
+import { NotificationOffAction } from 'src/app/store/notification.action';
 
 @Injectable()
 export class DaigouEffects {
@@ -31,11 +33,29 @@ export class DaigouEffects {
     mergeMap((action: DgChangeToTracking) => {
       return this.daigouService.updateDaigouTable(action.payload).pipe(
         map((result: any) => {
+          this.store.dispatch(new NotificationOffAction());
           return new DgGetListAction(result);
         })
       );
     })
   );
 
-  constructor(private action$: Actions, private daigouService: DaigouService) {}
+  @Effect()
+  addToBuy$: Observable<Action> = this.action$.pipe(
+    ofType(DaigouActionTypes.DAIGOU_ADD_TO_BUY),
+    mergeMap((action: DgAddToBuyAction) => {
+      return this.daigouService.addToBuy(action.payload).pipe(
+        map((result: any) => {
+          this.store.dispatch(new NotificationOffAction());
+          return new DgGetListAction(result);
+        })
+      );
+    })
+  );
+
+  constructor(
+    private store: Store<any>,
+    private action$: Actions,
+    private daigouService: DaigouService
+  ) {}
 }

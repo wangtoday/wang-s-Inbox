@@ -3,6 +3,10 @@ import { DaiGouState } from '../../store/daigou.state';
 import { Store } from '@ngrx/store';
 import { DaigouService } from '../../services/daigou.service';
 import { DgChangeToTracking } from '../../store/daigou.actions';
+import {
+  NotificationOnAction,
+  NotificationOffAction
+} from 'src/app/store/notification.action';
 
 @Component({
   selector: 'app-tobuy',
@@ -11,7 +15,8 @@ import { DgChangeToTracking } from '../../store/daigou.actions';
 })
 export class TobuyComponent implements OnInit {
   error: string = '';
-  toggleTracking = false;
+  toggleStatus = false;
+  toggleModal: boolean = false;
 
   trackingnumber = '';
 
@@ -21,12 +26,16 @@ export class TobuyComponent implements OnInit {
   toggleData: any;
 
   toggleToTracking(data) {
-    this.toggleTracking = true;
+    this.toggleModal = true;
     this.toggleData = data;
+
+    this.store.dispatch(new NotificationOnAction());
   }
 
   handleCancel() {
-    this.toggleTracking = false;
+    this.store.dispatch(new NotificationOffAction());
+    console.log('toggle close');
+    this.toggleModal = false;
   }
 
   tracking() {
@@ -46,19 +55,25 @@ export class TobuyComponent implements OnInit {
     );
 
     setTimeout(() => {
-      this.toggleTracking = false;
+      this.toggleModal = false;
     }, 2000);
   }
 
   constructor(
     private daigouService: DaigouService,
-    private store: Store<DaiGouState>
+    private store: Store<any>
   ) {}
 
   ngOnInit() {
     this.store.select('daigou').subscribe(value => {
       this.dTobuyTable = value.dToBuyList;
       this.loading = false;
+    });
+
+    // notification listener
+    this.store.select('notification').subscribe(value => {
+      console.log('value: ', value);
+      this.toggleStatus = value.loading;
     });
   }
 }

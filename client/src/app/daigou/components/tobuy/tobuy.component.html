@@ -4,7 +4,7 @@
   #trackingTable
   [nzData]="dTobuyTable"
   *ngIf="!loading"
-  [nzScroll]="{ y: '240px' }"
+  [nzScroll]="{ y: '540px' }"
 >
   <thead>
     <tr>
@@ -24,7 +24,7 @@
           nz-button
           nzType="primary"
           (click)="toggleToTracking(data)"
-          [nzLoading]="toggleTracking"
+          [nzLoading]="toggleStatus"
         >
           <i nz-icon type="shopping-cart" theme="outline"></i>开始追踪
         </button>
@@ -34,7 +34,7 @@
 </nz-table>
 
 <nz-modal
-  [(nzVisible)]="toggleTracking"
+  [(nzVisible)]="toggleModal"
   nzTitle="添加信息"
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="tracking()"

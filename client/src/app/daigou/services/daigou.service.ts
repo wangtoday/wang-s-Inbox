@@ -3,11 +3,66 @@ import { CoreHttpService } from 'src/app/service/core-http.service';
 import { from, Observable } from 'rxjs';
 import { map, mergeMap, flatMap } from 'rxjs/operators';
 
+import * as uid from 'uid';
+
 @Injectable({
   providedIn: 'root'
 })
 export class DaigouService {
   constructor(private coreService: CoreHttpService) {}
+
+  addToBuy(payload) {
+
+    let userid = ''
+    console.log(payload);
+
+    const db = this.coreService.fireStore();
+
+    const daigouRef$ = from(
+      db
+        .collection('daigou')
+        .doc(payload.docId)
+        .get()
+    );
+
+    return daigouRef$.pipe(
+      map(result => {
+        if (result.exists) {
+          let doc = result.data();
+          let recordCollection = [];
+          userid = doc.userid;
+          let record = doc.record;
+          record.forEach((element, index) => {
+            recordCollection.push(element);
+          });
+
+          recordCollection.push({
+            itemname: payload.itemname,
+            number: payload.number,
+            status: false,
+            uid: uid()
+          });
+          doc.record = recordCollection;
+          return doc;
+        }
+        return null;
+      }),
+      mergeMap(result => {
+        console.log(result);
+
+        return from(
+          db
+            .collection('daigou')
+            .doc(payload.docId)
+            .set(result)
+        );
+      }),
+      map(result => {
+        return userid;
+      })
+    );
+    return null;
+  }
 
   updateDaigouTable(payload) {
     console.log('coming: ', payload);

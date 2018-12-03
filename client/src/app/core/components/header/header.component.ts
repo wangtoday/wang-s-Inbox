@@ -10,7 +10,7 @@ import { AuthStatusCheckAction } from 'src/app/auth/store/auth.actions';
 })
 export class HeaderComponent implements OnInit {
   // header的作用就是loading菜单, 需要动态的loading一些菜单.
-  constructor(private store: Store<AuthState>) {}
+  constructor(public store: Store<AuthState>) {}
 
   ngOnInit() {
     // TODO: 下面这个以后可以撤掉, 因为用户进入, 肯定都是登录进入的,
