@@ -32,11 +32,12 @@
 <nz-modal
   [(nzVisible)]="toggleModal"
   nzTitle="添加购买"
-  nzWidth="550"
+  nzWidth="480"
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
 >
-  <!-- [nzOkLoading]="isOkLoading" -->
+  <!---->
   <!---->
   <form
     nz-form
@@ -46,23 +47,23 @@
   >
     <nz-form-item>
       <nz-form-control>
-        <nz-input-group>
-          <!--
-            <input formControlName="itemname" nz-input placeholder="种类" />
-          -->
-          <nz-cascader
-            [nzOptions]="options"
-            formControlName="itemname"
-            (ngModelChange)="onChanges($event)"
-            [nzPlaceHolder]="'请选择要买的物品'"
-          >
-          </nz-cascader>
-        </nz-input-group>
+        <!-- <nz-input-group> -->
+        <!--
+          <input formControlName="itemname" nz-input placeholder="种类" />
+        -->
+        <nz-cascader
+          [nzOptions]="options"
+          formControlName="itemname"
+          (ngModelChange)="onChanges($event)"
+          [nzPlaceHolder]="'请选择要买的物品'"
+        >
+        </nz-cascader>
+        <!-- </nz-input-group> -->
         <nz-form-explain
           *ngIf="
             buyForm.get('itemname').dirty && buyForm.get('itemname').errors
           "
-          >Please input your username!</nz-form-explain
+          >请选择要买的商品!</nz-form-explain
         >
       </nz-form-control>
     </nz-form-item>

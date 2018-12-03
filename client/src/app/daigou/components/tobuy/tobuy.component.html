@@ -40,6 +40,15 @@
   (nzOnOk)="tracking()"
 >
   <div style="margin-bottom: 16px;">
+    <nz-select
+      style="width: 100%;margin-bottom: .2rem"
+      [(ngModel)]="selectedProgress"
+      nzAllowClear
+      nzPlaceHolder="选择快递公司 "
+    >
+      <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+      <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+    </nz-select>
     <nz-input-group [nzAddOnAfter]="addOnAfterIconTemplate">
       <input
         type="text"
@@ -51,7 +60,7 @@
     <div style="margin-top:.3rem"></div>
     <nz-alert nzType="error" [nzMessage]="error" *ngIf="error"></nz-alert>
     <ng-template #addOnAfterIconTemplate>
-            <i nz-icon type="barcode" theme="outline"></i>
+      <i nz-icon type="barcode" theme="outline"></i>
     </ng-template>
   </div>
 </nz-modal>

@@ -9,6 +9,7 @@ import { DgAddToBuyAction } from '../../store/daigou.actions';
   styleUrls: ['./daigou.component.scss']
 })
 export class DaigouComponent implements OnInit {
+  isOkLoading: boolean = false;
   options = [
     {
       value: '爱他美',
@@ -58,23 +59,7 @@ export class DaigouComponent implements OnInit {
   }
 
   handleOk() {
-    let { itemname, number } = this.buyForm.value;
-    itemname = itemname.toString().replace(',', '');
-
-    this.store.dispatch(
-      new DgAddToBuyAction({
-        ...this.buyerInfo,
-        ...{
-          itemname,
-          number
-        }
-      })
-    );
-
-    this.toggleModal = false;
-
-    console.log(itemname, number);
-    this.buyForm.reset();
+    this.buySubmit();
   }
 
   handleCancel() {
@@ -91,18 +76,48 @@ export class DaigouComponent implements OnInit {
       this.buyForm.controls[i].markAsDirty();
       this.buyForm.controls[i].updateValueAndValidity();
     }
+    if (this.buyForm.valid) {
+      let { itemname, number } = this.buyForm.value;
+      itemname = itemname.toString().replace(',', '');
+      this.isOkLoading = true;
+      this.store.dispatch(
+        new DgAddToBuyAction({
+          ...this.buyerInfo,
+          ...{
+            itemname,
+            number
+          }
+        })
+      );
+
+      // this.toggleModal = false;
+
+      console.log(itemname, number);
+    } else {
+      return;
+    }
   }
 
   constructor(private fb: FormBuilder, public store: Store<any>) {}
 
   ngOnInit() {
-    this.store.select('daigou').subscribe(value => {
-      console.log('获取store', value);
-    });
-
     this.buyForm = this.fb.group({
       itemname: [null, [Validators.required]],
       number: [null, [Validators.required]]
+    });
+    this.store.select('notification').subscribe(value => {
+      console.log('notification status:', value);
+      if (!value.loading) {
+        this.buyForm.reset();
+        this.isOkLoading = false;
+        setTimeout(() => {
+          this.toggleModal = false;
+        }, 400);
+      }
+    });
+
+    this.store.select('daigou').subscribe(value => {
+      console.log('获取store', value);
     });
   }
 }

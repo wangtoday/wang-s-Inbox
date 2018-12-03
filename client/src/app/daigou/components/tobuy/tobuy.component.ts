@@ -19,6 +19,7 @@ export class TobuyComponent implements OnInit {
   toggleModal: boolean = false;
 
   trackingnumber = '';
+  selectedProgress = '';
 
   dTobuyTable: any = [];
   loading = true;
