@@ -1,8 +1,10 @@
-:host /deep/ .ant-menu-item {
+:host /deep/ .ant-menu-item,
+:host /deep/ .ant-menu-submenu {
   user-select: none;
 }
 
-:host /deep/ .ant-menu-item:focus {
+:host /deep/ .ant-menu-item:focus,
+:host /deep/ .ant-menu-submenu:focus {
   border: none;
   outline: none;
 }

@@ -10,32 +10,44 @@ import { DgAddToBuyAction } from '../../store/daigou.actions';
 })
 export class DaigouComponent implements OnInit {
   isOkLoading: boolean = false;
+
+  stepData = [
+    {
+      value: '一段',
+      label: '一段',
+      isLeaf: true
+    },
+    {
+      value: '二段',
+      label: '二段',
+      isLeaf: true
+    },
+    {
+      value: '三段',
+      label: '三段',
+      isLeaf: true
+    },
+    {
+      value: '四段',
+      label: '四段',
+      isLeaf: true
+    }
+  ];
   options = [
     {
       value: '爱他美',
       label: '爱他美',
-      children: [
-        {
-          value: '一段',
-          label: '一段',
-          isLeaf: true
-        },
-        {
-          value: '二段',
-          label: '二段',
-          isLeaf: true
-        },
-        {
-          value: '三段',
-          label: '三段',
-          isLeaf: true
-        },
-        {
-          value: '四段',
-          label: '四段',
-          isLeaf: true
-        }
-      ]
+      children: this.stepData
+    },
+    {
+      value: '爱他美铂金',
+      label: '爱他美铂金',
+      children: this.stepData
+    },
+    {
+      value: 'A2',
+      label: 'A2',
+      children: this.stepData
     }
   ];
 

@@ -12,8 +12,7 @@ export class DaigouService {
   constructor(private coreService: CoreHttpService) {}
 
   addToBuy(payload) {
-
-    let userid = ''
+    let userid = '';
     console.log(payload);
 
     const db = this.coreService.fireStore();
@@ -92,7 +91,8 @@ export class DaigouService {
                 ...{
                   status: true,
                   tracknumber: payload.tracknumber,
-                  progress: ''
+                  progress: payload.progress,
+                  payid: false
                 }
               };
             }

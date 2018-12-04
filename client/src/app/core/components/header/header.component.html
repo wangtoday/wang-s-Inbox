@@ -8,14 +8,31 @@
     *ngIf="(store.select('auth') | async) as storeOBJ"
   >
     <ng-container *ngIf="storeOBJ.status">
-      <li
-        nz-menu-item
-        *ngFor="let nav of storeOBJ.user.active"
-        [routerLink]="'/core/' + nav"
-        routerLinkActive="active-link"
-      >
-        {{ nav === "daigou" ? "代购" : nav }}
-      </li>
+      <ng-container *ngFor="let nav of storeOBJ.user.active">
+        <li
+          [routerLink]="'/core/' + nav"
+          routerLinkActive="active-link"
+          nz-submenu
+        >
+          <span title>{{ nav === 'daigou' ? '代购' : nav }}</span>
+          <ul *ngIf="nav === 'daigou'">
+            <li
+              nz-menu-item
+              [routerLink]="'/core/' + nav"
+              routerLinkActive="active-link"
+            >
+              需要购买
+            </li>
+            <li
+              nz-menu-item
+              [routerLink]="'/core/' + nav + '/tracking'"
+              routerLinkActive="active-link"
+            >
+              购买追踪
+            </li>
+          </ul>
+        </li>
+      </ng-container>
     </ng-container>
   </ul>
 </nz-header>

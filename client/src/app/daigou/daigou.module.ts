@@ -15,6 +15,10 @@ const daigouRoute: Routes = [
   {
     path: '',
     component: ContainerComponent
+  },
+  {
+    path: 'tracking',
+    component: TrackingComponent
   }
 ];
 
@@ -26,6 +30,11 @@ const daigouRoute: Routes = [
     StoreModule.forFeature('daigou', daigouReducer),
     EffectsModule.forFeature([DaigouEffects])
   ],
-  declarations: [DaigouComponent, ContainerComponent, TrackingComponent, TobuyComponent]
+  declarations: [
+    DaigouComponent,
+    ContainerComponent,
+    TrackingComponent,
+    TobuyComponent
+  ]
 })
 export class DaigouModule {}
