@@ -10,6 +10,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { DaigouEffects } from './store/daigou.effects';
 import { TrackingComponent } from './components/tracking/tracking.component';
 import { TobuyComponent } from './components/tobuy/tobuy.component';
+import { AddContactComponent } from './components/add-contact/add-contact.component';
 
 const daigouRoute: Routes = [
   {
@@ -34,7 +35,8 @@ const daigouRoute: Routes = [
     DaigouComponent,
     ContainerComponent,
     TrackingComponent,
-    TobuyComponent
+    TobuyComponent,
+    AddContactComponent
   ]
 })
 export class DaigouModule {}

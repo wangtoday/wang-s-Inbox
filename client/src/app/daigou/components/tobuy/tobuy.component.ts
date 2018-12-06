@@ -108,16 +108,18 @@ export class TobuyComponent implements OnInit {
   ngOnInit() {
     this.store.select('daigou').subscribe(value => {
       this.dTobuyTable = value.dToBuyList;
-
+      console.log('initi: ', this.dTobuyTable);
       // setTimeout(() => {
-      if (this.dTobuyTable.length > 0) {
+      if (this.dTobuyTable && this.dTobuyTable.length > 0) {
         this.displayData = this.dTobuyTable;
 
         this.displayData.forEach(element => {
           this.buyerlist.push({ text: element.buyer, value: element.buyer });
         });
         // console.log('add: ', this.buyerlist);
-        this.buyerlist = _.uniqBy(this.buyerlist, 'text');
+        if (this.buyerlist.length > 0) {
+          this.buyerlist = _.uniqBy(this.buyerlist, 'text');
+        }
         this.loading = false;
       }
       // });

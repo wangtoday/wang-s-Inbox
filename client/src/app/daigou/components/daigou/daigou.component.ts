@@ -11,6 +11,7 @@ import { DgAddToBuyAction } from '../../store/daigou.actions';
 export class DaigouComponent implements OnInit {
   isOkLoading: boolean = false;
 
+
   stepData = [
     {
       value: '一段',
@@ -84,6 +85,7 @@ export class DaigouComponent implements OnInit {
   }
 
   buySubmit(): void {
+    // tslint:disable-next-line:forin
     for (const i in this.buyForm.controls) {
       this.buyForm.controls[i].markAsDirty();
       this.buyForm.controls[i].updateValueAndValidity();
@@ -117,6 +119,7 @@ export class DaigouComponent implements OnInit {
       itemname: [null, [Validators.required]],
       number: [null, [Validators.required]]
     });
+
     this.store.select('notification').subscribe(value => {
       console.log('notification status:', value);
       if (!value.loading) {

@@ -4,12 +4,17 @@ import { from, Observable } from 'rxjs';
 import { map, mergeMap, flatMap } from 'rxjs/operators';
 
 import * as uid from 'uid';
+import { Store } from '@ngrx/store';
+import { AuthState } from 'src/app/auth/store/auth.state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DaigouService {
-  constructor(private coreService: CoreHttpService) {}
+  constructor(
+    private store: Store<AuthState>,
+    private coreService: CoreHttpService
+  ) {}
 
   addToBuy(payload) {
     let userid = '';
@@ -117,7 +122,20 @@ export class DaigouService {
     );
   }
 
+  addContact(contactObj): Observable<any> {
+    const db = this.coreService.fireStore();
+    const daigouAddRef$ = from(
+      db
+        .collection('daigou')
+        .doc(contactObj.name)
+        .set(contactObj)
+    );
+
+    return daigouAddRef$.pipe(map(result => contactObj.userid));
+  }
+
   consumeDaigouTable(userid): Observable<any> {
+    console.log('我来了这里', userid);
     const db = this.coreService.fireStore();
     const daigouRef = db.collection('daigou');
 
@@ -136,7 +154,7 @@ export class DaigouService {
           const tt = [];
           for (let index = 0; index < element.data().record.length; index++) {
             element.data().record[index].buyer = element.data().name;
-            let item = {
+            const item = {
               ...element.data().record[index],
               ...{
                 buyer: element.data().name,

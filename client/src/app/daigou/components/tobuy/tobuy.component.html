@@ -1,75 +1,77 @@
 <h1>需要购买</h1>
 
-<nz-table
-  #trackingTable
-  [nzData]="displayData"
-  *ngIf="!loading"
-  [nzShowPagination]="true"
-  [nzHideOnSinglePage]="true"
-  [nzPageSize]="'10'"
->
-  <thead>
-    <tr>
-      <th style="word-break: keep-all;" nzWidth="80px">buyer</th>
-      <th style="word-break: keep-all;" nzWidth="250px">名称</th>
-      <th style="word-break: keep-all">数量</th>
-      <th
-        nzShowFilter
-        [nzFilterMultiple]="false"
-        [nzFilters]="buyerlist"
-        (nzFilterChange)="filter( $event)"
-      >
-        操作
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of trackingTable.data">
-      <td style="word-break: keep-all;">{{ data.buyer }}</td>
-      <td style="word-break: keep-all;">{{ data.itemname }}</td>
-      <td style="word-break: keep-all;">{{ data.number }}</td>
-      <td style=" text-align: center;">
-        <button
-          nz-button
-          nzType="primary"
-          (click)="toggleToTracking(data)"
-          [nzLoading]="toggleStatus"
+<ng-container *ngIf="displayData">
+  <nz-table
+    #trackingTable
+    [nzData]="displayData"
+    *ngIf="!loading"
+    [nzShowPagination]="true"
+    [nzHideOnSinglePage]="true"
+    [nzPageSize]="'10'"
+  >
+    <thead>
+      <tr>
+        <th style="word-break: keep-all;" nzWidth="80px">buyer</th>
+        <th style="word-break: keep-all;" nzWidth="250px">名称</th>
+        <th style="word-break: keep-all">数量</th>
+        <th
+          nzShowFilter
+          [nzFilterMultiple]="false"
+          [nzFilters]="buyerlist"
+          (nzFilterChange)="filter($event)"
         >
-          <i nz-icon type="shopping-cart" theme="outline"></i>开始追踪
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</nz-table>
+          操作
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of trackingTable.data">
+        <td style="word-break: keep-all;">{{ data.buyer }}</td>
+        <td style="word-break: keep-all;">{{ data.itemname }}</td>
+        <td style="word-break: keep-all;">{{ data.number }}</td>
+        <td style=" text-align: center;">
+          <button
+            nz-button
+            nzType="primary"
+            (click)="toggleToTracking(data)"
+            [nzLoading]="toggleStatus"
+          >
+            <i nz-icon type="shopping-cart" theme="outline"></i>开始追踪
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
 
-<nz-modal
-  [(nzVisible)]="toggleModal"
-  nzTitle="添加信息"
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="tracking()"
->
-  <div style="margin-bottom: 16px;">
-    <nz-select
-      style="width: 100%;margin-bottom: .2rem"
-      [(ngModel)]="selectedProgress"
-      nzAllowClear
-      nzPlaceHolder="选择快递公司 "
-    >
-      <nz-option nzValue="Auexpress" nzLabel="Auexpress"></nz-option>
-      <nz-option nzValue="重庆中环" nzLabel="重庆中环"></nz-option>
-    </nz-select>
-    <nz-input-group [nzAddOnAfter]="addOnAfterIconTemplate">
-      <input
-        type="text"
-        nz-input
-        [(ngModel)]="trackingnumber"
-        placeholder="请输入快递单号"
-      />
-    </nz-input-group>
-    <div style="margin-top:.3rem"></div>
-    <nz-alert nzType="error" [nzMessage]="error" *ngIf="error"></nz-alert>
-    <ng-template #addOnAfterIconTemplate>
-      <i nz-icon type="barcode" theme="outline"></i>
-    </ng-template>
-  </div>
-</nz-modal>
+  <nz-modal
+    [(nzVisible)]="toggleModal"
+    nzTitle="添加信息"
+    (nzOnCancel)="handleCancel()"
+    (nzOnOk)="tracking()"
+  >
+    <div style="margin-bottom: 16px;">
+      <nz-select
+        style="width: 100%;margin-bottom: .2rem"
+        [(ngModel)]="selectedProgress"
+        nzAllowClear
+        nzPlaceHolder="选择快递公司 "
+      >
+        <nz-option nzValue="Auexpress" nzLabel="Auexpress"></nz-option>
+        <nz-option nzValue="重庆中环" nzLabel="重庆中环"></nz-option>
+      </nz-select>
+      <nz-input-group [nzAddOnAfter]="addOnAfterIconTemplate">
+        <input
+          type="text"
+          nz-input
+          [(ngModel)]="trackingnumber"
+          placeholder="请输入快递单号"
+        />
+      </nz-input-group>
+      <div style="margin-top:.3rem"></div>
+      <nz-alert nzType="error" [nzMessage]="error" *ngIf="error"></nz-alert>
+      <ng-template #addOnAfterIconTemplate>
+        <i nz-icon type="barcode" theme="outline"></i>
+      </ng-template>
+    </div>
+  </nz-modal>
+</ng-container>

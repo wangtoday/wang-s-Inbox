@@ -4,9 +4,16 @@ export enum DaigouActionTypes {
   DAIGOU_GET_LIST = '[DAIGOU] get list',
   DAIGOU_LIST = '[DAIGOU] list',
 
+  DAIGOU_ADD_CONTACT = '[DAIGOU] add contact',
+
   DAIGOU_ADD_TO_BUY = '[DAIGOU] add to buy',
 
   DAIGOU_CHANGE_TO_TRACKING = '[DAIGOU] toggle to tacking'
+}
+
+export class DgAddContactAction implements Action {
+  readonly type: string = DaigouActionTypes.DAIGOU_ADD_CONTACT;
+  constructor(public payload: any) {}
 }
 
 export class DgGetListAction implements Action {

@@ -29,6 +29,16 @@
   </nz-collapse-panel>
 </nz-collapse>
 
+<nz-collapse [nzBordered]="false">
+  <nz-collapse-panel
+    [nzHeader]="'添加联系人'"
+    [ngStyle]="panelStyle"
+    [nzShowArrow]="false"
+  >
+    <p style="margin:0;"><app-add-contact></app-add-contact></p>
+  </nz-collapse-panel>
+</nz-collapse>
+
 <nz-modal
   [(nzVisible)]="toggleModal"
   nzTitle="添加购买"
