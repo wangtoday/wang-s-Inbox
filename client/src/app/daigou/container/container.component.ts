@@ -15,8 +15,9 @@ export class ContainerComponent implements OnInit {
 
   ngOnInit() {
     this.store.select('auth').subscribe(value => {
-      if (value.status) {
-        this.loading = false;
+      this.loading = false;
+      
+      if (value.status && value.user) {
         this.store.dispatch(new DgGetListAction(value.user.userid));
       }
     });

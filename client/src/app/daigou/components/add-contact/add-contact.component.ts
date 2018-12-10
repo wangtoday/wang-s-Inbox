@@ -3,6 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { DgAddContactAction } from '../../store/daigou.actions';
 
+// third library
+import * as libphonenumber from 'google-libphonenumber';
+import { PhoneValidator } from 'src/app/tooltips/phone-validator';
+
 @Component({
   selector: 'app-add-contact',
   templateUrl: './add-contact.component.html',
@@ -37,8 +41,13 @@ export class AddContactComponent implements OnInit {
     });
     this.contactForm = this.fb.group({
       name: [null, [Validators.required]],
+      phoneNumberPrefix: [null],
       phone: [null, [Validators.required]],
       address: [null, [Validators.required]]
     });
+
+    this.contactForm.get('phone').validator = PhoneValidator.validCountryPhone(
+      this.contactForm.get('phoneNumberPrefix')
+    );
   }
 }

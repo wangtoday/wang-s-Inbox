@@ -3,7 +3,7 @@
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name"
       >收件人</nz-form-label
     >
-    <nz-form-control [nzSm]="14" [nzXs]="24">
+    <nz-form-control [nzSm]="18" [nzXs]="24">
       <input nz-input formControlName="name" id="name" />
       <nz-form-explain
         *ngIf="contactForm.get('name').dirty && contactForm.get('name').errors"
@@ -15,7 +15,7 @@
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="address"
       >地址</nz-form-label
     >
-    <nz-form-control [nzSm]="14" [nzXs]="24">
+    <nz-form-control [nzSm]="18" [nzXs]="24">
       <input nz-input formControlName="address" id="address" />
       <nz-form-explain
         *ngIf="
@@ -29,19 +29,45 @@
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="phone"
       >电话</nz-form-label
     >
-    <nz-form-control [nzSm]="14" [nzXs]="24">
-      <input nz-input formControlName="phone" id="phone" type="number" />
-
+    <nz-form-control [nzSm]="18" [nzXs]="24">
+      <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+        <ng-template #addOnBeforeTemplate>
+          <nz-select formControlName="phoneNumberPrefix" style="width: 70px;">
+            <nz-option nzLabel="+86" nzValue="+86"></nz-option>
+            <nz-option nzLabel="+87" nzValue="+87"></nz-option>
+          </nz-select>
+        </ng-template>
+        <input formControlName="phone" id="'phoneNumber'" nz-input />
+      </nz-input-group>
       <nz-form-explain
         *ngIf="
           contactForm.get('phone').dirty && contactForm.get('phone').errors
         "
-        >请输入收件人电话!</nz-form-explain
       >
+        <span
+          *ngIf="contactForm.get('phone').errors.required; else: otherErrorMsg"
+        >
+          Please input your phone number!</span
+        >
+        <ng-template #otherErrorMsg>
+          Error: {{ contactForm.get('phone').errors.validCountryPhone }}
+        </ng-template>
+      </nz-form-explain>
     </nz-form-control>
+    <!--
+      <input nz-input formControlName="phone" id="phone" type="number" />
+
+        <nz-form-explain
+          *ngIf="
+            contactForm.get('phone').dirty && contactForm.get('phone').errors
+          "
+          >请输入收件人电话!</nz-form-explain
+        >
+      </nz-form-control>
+    -->
   </nz-form-item>
   <nz-form-item nz-row style="margin-bottom:8px;">
-    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+    <nz-form-control [nzSpan]="18" [nzOffset]="6">
       <button
         nz-button
         nzType="default"

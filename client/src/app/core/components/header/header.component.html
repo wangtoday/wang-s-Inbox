@@ -7,7 +7,7 @@
     style="line-height: 64px;"
     *ngIf="(store.select('auth') | async) as storeOBJ"
   >
-    <ng-container *ngIf="storeOBJ.status">
+    <ng-container *ngIf="storeOBJ.status && storeOBJ.user">
       <ng-container *ngFor="let nav of storeOBJ.user.active">
         <li
           [routerLink]="'/core/' + nav"

@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+  firebaseCongif: {
+    apiKey: 'AIzaSyC0kCEHNDSC5L-82GZDxJBQFlk2XdqlLmU',
+    authDomain: 'life-in-a-box-dev.firebaseapp.com',
+    databaseURL: 'https://life-in-a-box-dev.firebaseio.com',
+    projectId: 'life-in-a-box-dev',
+    storageBucket: 'life-in-a-box-dev.appspot.com',
+    messagingSenderId: '994138220801'
+  }
 };
 
 /*
