@@ -32,17 +32,17 @@ export class DaigouService {
     return daigouRef$.pipe(
       map(result => {
         if (result.exists) {
-          let doc = result.data();
-          let recordCollection = [];
+          const doc = result.data();
+          const recordCollection = [];
           userid = doc.userid;
-          let record = doc.record;
+          const record = doc.record;
           record.forEach((element, index) => {
             recordCollection.push(element);
           });
 
           recordCollection.push({
             itemname: payload.itemname,
-            number: payload.number,
+            number:  payload.number,
             status: false,
             uid: uid()
           });
@@ -86,9 +86,9 @@ export class DaigouService {
       map((result: any) => {
         if (result.exists) {
           console.log('获取该列的数据', result.data());
-          let doc = result.data();
+          const doc = result.data();
           userid = doc.userid;
-          let record = doc.record;
+          const record = doc.record;
           record.forEach((element, index) => {
             if (element.uid == payload.uid) {
               record[index] = {

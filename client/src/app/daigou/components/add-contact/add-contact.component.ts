@@ -29,15 +29,29 @@ export class AddContactComponent implements OnInit {
       this.store.dispatch(
         new DgAddContactAction({
           ...this.contactForm.value,
-          ...{ userid: this.userid, record: [] }
+
+          ...{
+            phone:
+              this.contactForm.value.phoneNumberPrefix +
+              this.contactForm.value.phone,
+            userid: this.userid,
+            record: []
+          }
         })
       );
+
+      setTimeout(() => {
+        this.contactForm.reset();
+      }, 1000);
     }
   }
 
   ngOnInit() {
     this.store.select('auth').subscribe(value => {
-      this.userid = value.user.userid;
+      console.log('获取 id: ', value);
+      if (value.status) {
+        this.userid = value.user.userid;
+      }
     });
     this.contactForm = this.fb.group({
       name: [null, [Validators.required]],
@@ -46,8 +60,14 @@ export class AddContactComponent implements OnInit {
       address: [null, [Validators.required]]
     });
 
-    this.contactForm.get('phone').validator = PhoneValidator.validCountryPhone(
-      this.contactForm.get('phoneNumberPrefix')
-    );
+    this.contactForm
+      .get('phone')
+      .setValidators([
+        Validators.required,
+        PhoneValidator.validCountryPhone(
+          this.contactForm.get('phoneNumberPrefix')
+        )
+      ]);
+    // this.contactForm.get('phone').validator = ;
   }
 }

@@ -1,11 +1,11 @@
-import { Action } from "@ngrx/store";
+import { Action } from '@ngrx/store';
 
 export enum AuthActionTypes {
-  AUTH_LOGIN = "[AUTH] login",
-  AUTH_LOGIN_SUCCESS = "[AUTH] login success",
-  AUTH_LOGIN_Failure = "[AUTH] login failure",
-  AUTH_STATUS_CHECK = "[AUTH] status check",
-  AUTH_STATUS = "[AUTH] status"
+  AUTH_LOGIN = '[AUTH] login',
+  AUTH_LOGIN_SUCCESS = '[AUTH] login success',
+  AUTH_LOGIN_Failure = '[AUTH] login failure',
+  AUTH_STATUS_CHECK = '[AUTH] status check',
+  AUTH_STATUS = '[AUTH] status'
 }
 
 export class LoginAction implements Action {

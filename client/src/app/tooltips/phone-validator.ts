@@ -12,18 +12,12 @@ export class PhoneValidator {
           phoneControl.updateValueAndValidity();
         });
       }
-
-      if (phoneControl.value !== '') {
+      if (phoneControl.value && phoneControl.value !== '') {
         try {
           const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
           const phoneNumber =
             countryControl.value + '' + phoneControl.value + '';
-          //   const region = countryControl.value;
-          //   console.log('region: ', region.split('+')[1]);
-          //   const pNumber = phoneUtil.parseAndKeepRawInput(
-          //     phoneNumber,
-          //     region.split('+')[1]
-          //   );
+
           const isValidNumber = phoneUtil.isValidNumber(
             phoneUtil.parse(phoneNumber)
           );
@@ -34,7 +28,7 @@ export class PhoneValidator {
             return undefined;
           }
         } catch (e) {
-          console.log(e);
+          //   console.log('来这类报错了么?', e);
           return {
             validCountryPhone: '电话号码过短'
           };
@@ -44,8 +38,10 @@ export class PhoneValidator {
           validCountryPhone: '电话号码格式错误'
         };
       } else {
+        // console.log('这个地方是 undefine 的');
         return undefined;
       }
     };
+    // tslint:disable-next-line:semicolon
   };
 }

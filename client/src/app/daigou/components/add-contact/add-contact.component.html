@@ -47,10 +47,10 @@
         <span
           *ngIf="contactForm.get('phone').errors.required; else: otherErrorMsg"
         >
-          Please input your phone number!</span
+          请输入电话号码!</span
         >
         <ng-template #otherErrorMsg>
-          Error: {{ contactForm.get('phone').errors.validCountryPhone }}
+          {{ contactForm.get('phone').errors.validCountryPhone }}
         </ng-template>
       </nz-form-explain>
     </nz-form-control>

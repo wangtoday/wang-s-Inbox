@@ -28,6 +28,7 @@ export class AuthService {
 
   loginStatus(): Observable<any> {
     return Observable.create(obser => {
+      console.log(' 来没来?  ');
       return this.authService.fireAuth().onAuthStateChanged(
         user => {
           if (user) {

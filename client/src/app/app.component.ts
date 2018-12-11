@@ -9,7 +9,8 @@ import '@firebase/auth';
 import { Observable } from 'rxjs';
 import {
   LoginSuccessAction,
-  AuthStatusAction
+  AuthStatusAction,
+  AuthStatusCheckAction
 } from './auth/store/auth.actions';
 
 @Component({
@@ -19,7 +20,10 @@ import {
 })
 export class AppComponent implements OnInit, AfterContentChecked {
   constructor(private store: Store<AuthState>) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    setTimeout(() => {
+    }, 2000);
+  }
 
   ngAfterContentChecked(): void {
     // firebase.auth().signOut();

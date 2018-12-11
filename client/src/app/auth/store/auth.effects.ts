@@ -59,16 +59,16 @@ export class AuthEffects {
     mergeMap(result => {
       return this.authService.userdeatail(result.uid).pipe(
         map(data => {
-          // console.log("", data);
+          console.log('---> id get 吗?', data);
           if (data) {
-            // console.log(data);
+            console.log(data);
             return new AuthStatusAction({
               status: true,
               user: data
             });
           }
           // todo: 这个地方后面再进行操作吧
-          return new LoginFailtureAction();
+          // return new LoginFailtureAction();
         })
       );
     })

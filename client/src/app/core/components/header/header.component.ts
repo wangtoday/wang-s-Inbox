@@ -15,10 +15,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     // TODO: 下面这个以后可以撤掉, 因为用户进入, 肯定都是登录进入的,
     // 不需要再这里又重新实例化一下store
-    this.store.dispatch(new AuthStatusCheckAction());
 
     this.store.select('auth').subscribe(value => {
-      console.log('status :', value);
+      console.log('header ->status :', value);
     });
   }
 }
