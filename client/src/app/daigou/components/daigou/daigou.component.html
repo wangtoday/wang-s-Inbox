@@ -1,9 +1,11 @@
-<h1>联系人</h1>
+<h1 class="title">
+  联系人 <i nz-icon [type]="sorttype" theme="outline" (click)="sort()"></i>
+</h1>
 
-<nz-collapse
-  [nzBordered]="false"
-  *ngIf="(store.select('daigou') | async).dUserList as Contactlist"
->
+<input type="file" (change)="detectFiles($event)" #IDfrontfileUpload />
+<input type="file" (change)="detectFiles($event)" #IDbackfileUpload />
+
+<nz-collapse [nzBordered]="false" *ngIf="Contactlist && Contactlist.length > 0">
   <nz-collapse-panel
     *ngFor="let contactItem of Contactlist"
     [nzHeader]="contactItem.name"
@@ -15,11 +17,13 @@
     <p>{{ contactItem.phone }}</p>
     <div class="panel-setting-group">
       <nz-button-group>
-        <button nz-button nzType="default">
-          <i nz-icon type="copy" theme="outline"></i>复制
-        </button>
-        <button nz-button nzType="dashed">
-          <i nz-icon type="edit" theme="outline"></i>修改
+        <!--
+          <button nz-button nzType="default">
+            <i nz-icon type="copy" theme="outline"></i>复制
+          </button>
+        -->
+        <button nz-button nzType="dashed" (click)="showUPIDModal()">
+          <i nz-icon type="edit" theme="outline"></i>上传身份证
         </button>
         <button nz-button nzType="primary" (click)="showModal(contactItem)">
           <i nz-icon type="shop" theme="outline"></i>购买
@@ -34,8 +38,13 @@
     [nzHeader]="'添加联系人'"
     [ngStyle]="panelStyle"
     [nzShowArrow]="false"
+    [(nzActive)]="addColStatus"
   >
-    <p style="margin:0;"><app-add-contact></app-add-contact></p>
+    <p style="margin:0;">
+      <app-add-contact
+        (addContactStatus)="toggleaddColStatus($event)"
+      ></app-add-contact>
+    </p>
   </nz-collapse-panel>
 </nz-collapse>
 
@@ -113,4 +122,25 @@
   <ng-template #prefixLock
     ><i nz-icon type="calculator" theme="outline"></i
   ></ng-template>
+</nz-modal>
+
+<!-- 上传身份证 modal -->
+<nz-modal
+  [(nzVisible)]="isUPIDVisible"
+  [nzWidth]="420"
+  nzTitle="上传身份证"
+  (nzOnCancel)="handleUPIDCancel()"
+  (nzOnOk)="handleUPIDOk()"
+>
+  <div style="text-align:center">
+    <nz-button-group>
+      <button nz-button (click)="IDfrontfileUpload.click()">
+        <i nz-icon type="upload"></i><span>身份证正面 </span>
+      </button>
+
+      <button nz-button (click)="IDbackfileUpload.click()">
+        <i nz-icon type="upload"></i><span>身份证反面 </span>
+      </button>
+    </nz-button-group>
+  </div>
 </nz-modal>

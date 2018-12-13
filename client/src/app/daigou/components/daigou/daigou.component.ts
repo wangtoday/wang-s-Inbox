@@ -3,6 +3,17 @@ import { Store } from '@ngrx/store';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { DgAddToBuyAction } from '../../store/daigou.actions';
 
+import * as _ from 'lodash';
+import { NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
+import {
+  HttpClient,
+  HttpRequest,
+  HttpEventType,
+  HttpEvent,
+  HttpResponse
+} from '@angular/common/http';
+import { DaigouService } from '../../services/daigou.service';
+
 @Component({
   selector: 'app-daigou',
   templateUrl: './daigou.component.html',
@@ -11,7 +22,13 @@ import { DgAddToBuyAction } from '../../store/daigou.actions';
 export class DaigouComponent implements OnInit {
   isOkLoading: boolean = false;
 
+  addColStatus: boolean = false;
 
+  Contactlist: any[] = [];
+
+  idPictures: any[] = [];
+
+  sorttype = 'sort-descending';
   stepData = [
     {
       value: '一段',
@@ -66,6 +83,36 @@ export class DaigouComponent implements OnInit {
   buyForm: FormGroup;
   buyerInfo;
 
+  selectFile: any;
+  detectFiles(event) {
+    this.daigouService.uploadFile(event.target.files[0]);
+  }
+  demoUpload(element) {
+    console.log(element);
+    element.nativeElement.trigger();
+    // console.log(this.selectFile);
+  }
+  // 自定义上传的部分
+
+  toggleaddColStatus(event) {
+    this.addColStatus = event;
+  }
+
+  /**
+   * front end sort
+   */
+  sort() {
+    console.log('sort ');
+    this.Contactlist = _.sortBy(this.Contactlist, ['name']);
+
+    this.sorttype =
+      this.sorttype === 'sort-ascending' ? 'sort-descending' : 'sort-ascending';
+
+    if (this.sorttype === 'sort-ascending') {
+      this.Contactlist = _.reverse(this.Contactlist);
+    }
+  }
+
   showModal(data) {
     this.toggleModal = true;
     this.buyerInfo = data;
@@ -91,6 +138,7 @@ export class DaigouComponent implements OnInit {
       this.buyForm.controls[i].updateValueAndValidity();
     }
     if (this.buyForm.valid) {
+      // tslint:disable-next-line:prefer-const
       let { itemname, number } = this.buyForm.value;
       itemname = itemname.toString().replace(',', '');
       this.isOkLoading = true;
@@ -112,7 +160,13 @@ export class DaigouComponent implements OnInit {
     }
   }
 
-  constructor(private fb: FormBuilder, public store: Store<any>) {}
+  constructor(
+    private http: HttpClient,
+    private daigouService: DaigouService,
+    private msg: NzMessageService,
+    private fb: FormBuilder,
+    public store: Store<any>
+  ) {}
 
   ngOnInit() {
     this.buyForm = this.fb.group({
@@ -131,8 +185,29 @@ export class DaigouComponent implements OnInit {
       }
     });
 
-    this.store.select('daigou').subscribe(value => {
+    this.store.select('daigou').subscribe((value: any) => {
       console.log('获取store', value);
+      if (value) {
+        this.Contactlist = value.dUserList;
+      }
     });
+  }
+
+  // 上传身份证控制模板
+
+  // tslint:disable-next-line:member-ordering
+  isUPIDVisible: boolean = false;
+  showUPIDModal(): void {
+    this.isUPIDVisible = true;
+  }
+
+  handleUPIDOk(): void {
+    console.log('Button ok clicked!');
+    this.isUPIDVisible = false;
+  }
+
+  handleUPIDCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isUPIDVisible = false;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { DgAddContactAction } from '../../store/daigou.actions';
@@ -13,6 +13,8 @@ import { PhoneValidator } from 'src/app/tooltips/phone-validator';
   styleUrls: ['./add-contact.component.css']
 })
 export class AddContactComponent implements OnInit {
+  @Output() addContactStatus = new EventEmitter<boolean>();
+
   contactForm: FormGroup;
   userid: string;
 
@@ -42,6 +44,7 @@ export class AddContactComponent implements OnInit {
 
       setTimeout(() => {
         this.contactForm.reset();
+        this.addContactStatus.emit(false);
       }, 1000);
     }
   }

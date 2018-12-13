@@ -16,6 +16,16 @@ export class DaigouService {
     private coreService: CoreHttpService
   ) {}
 
+  uploadFile(file: any) {
+    const storageRef = this.coreService.fireStorage();
+
+    const mountainsRef = storageRef.child('mountains.jpg');
+
+    mountainsRef.put(file).then(function(snapshot) {
+      console.log('Uploaded a blob or file!');
+    });
+  }
+
   addToBuy(payload) {
     let userid = '';
     console.log(payload);
@@ -42,7 +52,7 @@ export class DaigouService {
 
           recordCollection.push({
             itemname: payload.itemname,
-            number:  payload.number,
+            number: payload.number,
             status: false,
             uid: uid()
           });
@@ -127,8 +137,15 @@ export class DaigouService {
     const daigouAddRef$ = from(
       db
         .collection('daigou')
-        .doc(contactObj.name)
-        .set(contactObj)
+        .doc(contactObj.name + uid())
+        .set({
+          ...contactObj,
+          ...{
+            createAt: this.coreService
+              .fireStoreInstance()
+              .FieldValue.serverTimestamp()
+          }
+        })
     );
 
     return daigouAddRef$.pipe(map(result => contactObj.userid));
@@ -139,7 +156,12 @@ export class DaigouService {
     const db = this.coreService.fireStore();
     const daigouRef = db.collection('daigou');
 
-    const daigouRef$ = from(daigouRef.where('userid', '==', userid).get());
+    const daigouRef$ = from(
+      daigouRef
+        .where('userid', '==', userid)
+        .orderBy('createAt', 'desc')
+        .get()
+    );
 
     return daigouRef$.pipe(
       map(value => {
