@@ -28,6 +28,8 @@ export class DaigouComponent implements OnInit {
 
   idPictures: any[] = [];
 
+  url: string = '';
+
   sorttype = 'sort-descending';
   stepData = [
     {
@@ -84,14 +86,29 @@ export class DaigouComponent implements OnInit {
   buyerInfo;
 
   selectFile: any;
-  detectFiles(event) {
-    this.daigouService.uploadFile(event.target.files[0]);
+  selectUser: string;
+  /**
+   *
+   * @param event file Info
+   * @param filetype 正面 还是反面
+   * @param username 用用户名+ uid() 来设定名称
+   */
+  detectFiles(event, filetype, username) {
+    console.log(filetype, username);
+    // this.daigouService.uploadFile(event.target.files[0]);
   }
   demoUpload(element) {
     console.log(element);
     element.nativeElement.trigger();
     // console.log(this.selectFile);
   }
+
+  doemoDownload() {
+    this.daigouService.downloadFile().then((value: any) => {
+      this.url = value;
+    });
+  }
+
   // 自定义上传的部分
 
   toggleaddColStatus(event) {
@@ -197,8 +214,11 @@ export class DaigouComponent implements OnInit {
 
   // tslint:disable-next-line:member-ordering
   isUPIDVisible: boolean = false;
-  showUPIDModal(): void {
+
+  showUPIDModal(username): void {
     this.isUPIDVisible = true;
+    // 确定 select 的 user
+    this.selectUser = username;
   }
 
   handleUPIDOk(): void {

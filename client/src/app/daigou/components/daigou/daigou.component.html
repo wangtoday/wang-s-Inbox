@@ -2,8 +2,12 @@
   联系人 <i nz-icon [type]="sorttype" theme="outline" (click)="sort()"></i>
 </h1>
 
-<input type="file" (change)="detectFiles($event)" #IDfrontfileUpload />
-<input type="file" (change)="detectFiles($event)" #IDbackfileUpload />
+<input type="file" (change)="detectFiles($event, 'front')" #IDfrontfileUpload />
+<input type="file" #IDbackfileUpload />
+<!-- (change)="detectFiles($event)" -->
+<button (click)="doemoDownload()">download</button>
+
+<img [src]="url" alt="" />
 
 <nz-collapse [nzBordered]="false" *ngIf="Contactlist && Contactlist.length > 0">
   <nz-collapse-panel
@@ -22,7 +26,11 @@
             <i nz-icon type="copy" theme="outline"></i>复制
           </button>
         -->
-        <button nz-button nzType="dashed" (click)="showUPIDModal()">
+        <button
+          nz-button
+          nzType="dashed"
+          (click)="showUPIDModal(contactItem.name)"
+        >
           <i nz-icon type="edit" theme="outline"></i>上传身份证
         </button>
         <button nz-button nzType="primary" (click)="showModal(contactItem)">

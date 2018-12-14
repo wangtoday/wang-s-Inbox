@@ -22,8 +22,43 @@ export class DaigouService {
     const mountainsRef = storageRef.child('mountains.jpg');
 
     mountainsRef.put(file).then(function(snapshot) {
-      console.log('Uploaded a blob or file!');
+      console.log('Uploaded a blob or file!', snapshot);
     });
+  }
+
+  downloadFile() {
+    // Create a reference to the file we want to download
+    const starsRef = this.coreService.fireStorage().child('mountains.jpg');
+
+    // Get the download URL
+    return starsRef
+      .getDownloadURL()
+      .then(function(url) {
+        // Insert url into an <img> tag to "download"
+        console.log('image: ', url);
+        return url;
+      })
+      .catch(function(error) {
+        // A full list of error codes is available at
+        // https://firebase.google.com/docs/storage/web/handle-errors
+        switch (error.code) {
+          case 'storage/object-not-found':
+            // File doesn't exist
+            break;
+
+          case 'storage/unauthorized':
+            // User doesn't have permission to access the object
+            break;
+
+          case 'storage/canceled':
+            // User canceled the upload
+            break;
+
+          case 'storage/unknown':
+            // Unknown error occurred, inspect the server response
+            break;
+        }
+      });
   }
 
   addToBuy(payload) {
