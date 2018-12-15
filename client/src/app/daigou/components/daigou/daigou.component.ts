@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { DgAddToBuyAction } from '../../store/daigou.actions';
+import { DgAddToBuyAction, DgUpdateContactAction } from '../../store/daigou.actions';
 
 import * as _ from 'lodash';
 import { NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
@@ -86,16 +86,29 @@ export class DaigouComponent implements OnInit {
   buyerInfo;
 
   selectFile: any;
-  selectUser: string;
+  selectUser: any;
+  selectIndex: any;
   /**
    *
    * @param event file Info
    * @param filetype 正面 还是反面
    * @param username 用用户名+ uid() 来设定名称
    */
-  detectFiles(event, filetype, username) {
-    console.log(filetype, username);
-    // this.daigouService.uploadFile(event.target.files[0]);
+  detectFiles(event, filetype) {
+    console.log(filetype, this.selectUser.name, this.selectIndex);
+    this.daigouService
+      .uploadFile(event.target.files[0], this.selectUser.name + filetype)
+      .then(value => {
+        console.log(value);
+        // this return is the path which can be display to the frontend side
+        // also need to get the link store into the user obj as well
+        this.selectUser[filetype + 'path'] = value;
+        this.daigouService.downloadFile(this.selectUser, filetype);
+
+        setTimeout(() => {
+          console.log(this.selectUser);
+        }, 5000);
+      });
   }
   demoUpload(element) {
     console.log(element);
@@ -103,10 +116,13 @@ export class DaigouComponent implements OnInit {
     // console.log(this.selectFile);
   }
 
+  /**
+   * test download url work now
+   */
   doemoDownload() {
-    this.daigouService.downloadFile().then((value: any) => {
-      this.url = value;
-    });
+    // this.daigouService.downloadFile().then((value: any) => {
+    //   this.url = value;
+    // });
   }
 
   // 自定义上传的部分
@@ -223,6 +239,12 @@ export class DaigouComponent implements OnInit {
 
   handleUPIDOk(): void {
     console.log('Button ok clicked!');
+    this.store.dispatch(
+      new DgUpdateContactAction({
+        index: this.selectIndex,
+        selectUser: this.selectUser
+      })
+    );
     this.isUPIDVisible = false;
   }
 

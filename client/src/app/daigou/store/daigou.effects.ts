@@ -9,7 +9,8 @@ import {
   DgListAction,
   DgChangeToTracking,
   DgAddToBuyAction,
-  DgAddContactAction
+  DgAddContactAction,
+  DgUpdateContactAction
 } from './daigou.actions';
 import { mergeMap, map } from 'rxjs/operators';
 import { NotificationOffAction } from 'src/app/store/notification.action';
@@ -42,6 +43,24 @@ export class DaigouEffects {
       );
     })
   );
+
+
+  @Effect()
+  updateContact$: Observable<Action> = this.action$.pipe(
+    ofType(DaigouActionTypes.DAIGOU_UPDATE_CONTACT),
+    mergeMap((action: DgUpdateContactAction) => {
+      console.log(action.payload);
+      return this.daigouService.updateContact(action.payload).pipe(
+        map(result => {
+          console.log(result);
+          // this.store.dispatch(new NotificationOffAction());
+          return new DgGetListAction(result);
+        })
+      );
+    })
+  );
+
+
 
   @Effect()
   changeToTracking$: Observable<Action> = this.action$.pipe(

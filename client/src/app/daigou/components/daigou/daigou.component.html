@@ -2,8 +2,16 @@
   联系人 <i nz-icon [type]="sorttype" theme="outline" (click)="sort()"></i>
 </h1>
 
-<input type="file" (change)="detectFiles($event, 'front')" #IDfrontfileUpload />
-<input type="file" #IDbackfileUpload />
+<input
+  type="file"
+  (change)="detectFiles($event, 'id-front')"
+  #IDfrontfileUpload
+/>
+<input
+  type="file"
+  (change)="detectFiles($event, 'id-back')"
+  #IDbackfileUpload
+/>
 <!-- (change)="detectFiles($event)" -->
 <button (click)="doemoDownload()">download</button>
 
@@ -11,11 +19,12 @@
 
 <nz-collapse [nzBordered]="false" *ngIf="Contactlist && Contactlist.length > 0">
   <nz-collapse-panel
-    *ngFor="let contactItem of Contactlist"
+    *ngFor="let contactItem of Contactlist; let i = index"
     [nzHeader]="contactItem.name"
     [nzActive]="false"
     [ngStyle]="panelStyle"
     [nzShowArrow]="false"
+    (click)="selectUser = contactItem; selectIndex = i"
   >
     <p>{{ contactItem.address }}</p>
     <p>{{ contactItem.phone }}</p>

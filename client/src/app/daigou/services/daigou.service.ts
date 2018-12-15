@@ -16,27 +16,36 @@ export class DaigouService {
     private coreService: CoreHttpService
   ) {}
 
-  uploadFile(file: any) {
+  uploadFile(file: any, filename: string) {
     const storageRef = this.coreService.fireStorage();
+    const mountainsRef = storageRef.child(`身份证/${filename}`);
 
-    const mountainsRef = storageRef.child('mountains.jpg');
-
-    mountainsRef.put(file).then(function(snapshot) {
+    /**
+     * TODO: 暂时默认都是上传成功, 没有考虑上传失败的情况
+     */
+    return mountainsRef.put(file).then(snapshot => {
       console.log('Uploaded a blob or file!', snapshot);
+      if (snapshot.state === 'success') {
+        return snapshot.metadata.fullPath;
+      }
+      return true;
     });
   }
 
-  downloadFile() {
+  downloadFile(selectUser, filetype) {
     // Create a reference to the file we want to download
-    const starsRef = this.coreService.fireStorage().child('mountains.jpg');
-
+    const starsRef = this.coreService
+      .fireStorage()
+      .child(selectUser[filetype + 'path']);
+    // return
     // Get the download URL
-    return starsRef
+    starsRef
       .getDownloadURL()
       .then(function(url) {
         // Insert url into an <img> tag to "download"
         console.log('image: ', url);
-        return url;
+        selectUser[filetype + 'url'] = url;
+        // return url;
       })
       .catch(function(error) {
         // A full list of error codes is available at
@@ -113,6 +122,32 @@ export class DaigouService {
     return null;
   }
 
+  updateContact(payload: any) {
+    const db = this.coreService.fireStore();
+
+    const daigouRef$ = from(
+      db
+        .collection('daigou')
+        .doc(payload.selectUser.docId)
+        .get()
+    );
+
+    return daigouRef$.pipe(
+      mergeMap((result: any) => {
+        const doc = result.data();
+        return from(
+          db
+            .collection('daigou')
+            .doc(payload.selectUser.docId)
+            .set({ ...doc, ...payload.selectUser })
+        );
+      }),
+      map(result => {
+        return payload.selectUser.userid;
+      })
+    );
+  }
+
   updateDaigouTable(payload) {
     console.log('coming: ', payload);
 
@@ -135,7 +170,7 @@ export class DaigouService {
           userid = doc.userid;
           const record = doc.record;
           record.forEach((element, index) => {
-            if (element.uid == payload.uid) {
+            if (element.uid === payload.uid) {
               record[index] = {
                 ...record[index],
                 ...{
@@ -169,13 +204,15 @@ export class DaigouService {
 
   addContact(contactObj): Observable<any> {
     const db = this.coreService.fireStore();
+    const ud = uid();
     const daigouAddRef$ = from(
       db
         .collection('daigou')
-        .doc(contactObj.name + uid())
+        .doc(contactObj.name + ud)
         .set({
           ...contactObj,
           ...{
+            docId: contactObj.name + ud,
             createAt: this.coreService
               .fireStoreInstance()
               .FieldValue.serverTimestamp()

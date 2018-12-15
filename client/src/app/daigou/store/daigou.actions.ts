@@ -6,9 +6,16 @@ export enum DaigouActionTypes {
 
   DAIGOU_ADD_CONTACT = '[DAIGOU] add contact',
 
+  DAIGOU_UPDATE_CONTACT = '[DAIGOU] update contact',
+
   DAIGOU_ADD_TO_BUY = '[DAIGOU] add to buy',
 
   DAIGOU_CHANGE_TO_TRACKING = '[DAIGOU] toggle to tacking'
+}
+
+export class DgUpdateContactAction implements Action {
+  readonly type: string = DaigouActionTypes.DAIGOU_UPDATE_CONTACT;
+  constructor(public payload: any) {}
 }
 
 export class DgAddContactAction implements Action {
@@ -37,6 +44,8 @@ export class DgListAction implements Action {
 }
 
 export type DaigouActionUion =
+  | DgAddContactAction
+  | DgUpdateContactAction
   | DgGetListAction
   | DgAddToBuyAction
   | DgListAction
