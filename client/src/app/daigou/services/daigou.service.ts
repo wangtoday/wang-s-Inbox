@@ -32,6 +32,12 @@ export class DaigouService {
     });
   }
 
+  /**
+   * TODO: 只考虑成功的情况
+   * 且, 根据值传递来的
+   * @param selectUser 传进来的值传递的 User
+   * @param filetype 根据传进来的 type 来抓取存储路径
+   */
   downloadFile(selectUser, filetype) {
     // Create a reference to the file we want to download
     const starsRef = this.coreService

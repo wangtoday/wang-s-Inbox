@@ -35,13 +35,20 @@
             <i nz-icon type="copy" theme="outline"></i>复制
           </button>
         -->
-        <button
-          nz-button
-          nzType="dashed"
-          (click)="showUPIDModal(contactItem.name)"
-        >
-          <i nz-icon type="edit" theme="outline"></i>上传身份证
-        </button>
+        <ng-container>
+          <button
+            nz-button
+            nzType="dashed"
+            (click)="showUPIDModal(contactItem.name)"
+          >
+            <i nz-icon type="edit" theme="outline"></i>
+            <span *ngIf="contactItem['id-backpath']; else changeView">
+              修改身份证
+            </span>
+            <ng-template #changeView> 上传身份证 </ng-template>
+          </button>
+        </ng-container>
+
         <button nz-button nzType="primary" (click)="showModal(contactItem)">
           <i nz-icon type="shop" theme="outline"></i>购买
         </button>
