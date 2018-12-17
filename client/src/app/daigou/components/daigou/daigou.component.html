@@ -13,7 +13,7 @@
   #IDbackfileUpload
 />
 <!-- (change)="detectFiles($event)" -->
-<button (click)="doemoDownload()">download</button>
+<!-- <button (click)="doemoDownload()">download</button> -->
 
 <img [src]="url" alt="" />
 
@@ -42,7 +42,7 @@
             (click)="showUPIDModal(contactItem.name)"
           >
             <i nz-icon type="edit" theme="outline"></i>
-            <span *ngIf="contactItem['id-backpath']; else changeView">
+            <span *ngIf="contactItem['id-backpath']; else: changeView">
               修改身份证
             </span>
             <ng-template #changeView> 上传身份证 </ng-template>
@@ -151,12 +151,12 @@
 <!-- 上传身份证 modal -->
 <nz-modal
   [(nzVisible)]="isUPIDVisible"
-  [nzWidth]="420"
+  [nzWidth]="720"
   nzTitle="上传身份证"
   (nzOnCancel)="handleUPIDCancel()"
   (nzOnOk)="handleUPIDOk()"
 >
-  <div style="text-align:center">
+  <div style="text-align:center" *ngIf="selectUser">
     <nz-button-group>
       <button nz-button (click)="IDfrontfileUpload.click()">
         <i nz-icon type="upload"></i><span>身份证正面 </span>
@@ -166,5 +166,37 @@
         <i nz-icon type="upload"></i><span>身份证反面 </span>
       </button>
     </nz-button-group>
+    <div style="margin-top:10px"></div>
+    <!-- 预览身份证 -->
+    <div nz-row nzGutter="16" *ngIf="selectUser['id-fronturl']">
+      <div nz-col nzSpan="12" style="text-align:center">
+        <!-- style="width:240px" -->
+
+        <nz-card nzHoverable [nzCover]="frontendIDtemplate">
+          <nz-card-meta nzTitle="身份证正面"></nz-card-meta>
+        </nz-card>
+        <ng-template #frontendIDtemplate>
+          <img
+            style="width:300px;    max-height: 240px !important;     border: 1px dashed;
+            "
+            alt="example"
+            [src]="selectUser['id-fronturl']"
+          />
+        </ng-template>
+      </div>
+      <div nz-col nzSpan="12" style="text-align:center">
+        <nz-card nzHoverable [nzCover]="backendIDtemplate">
+          <nz-card-meta nzTitle="身份证反面"></nz-card-meta>
+        </nz-card>
+        <ng-template #backendIDtemplate>
+          <img
+            style="width:300px;    max-height: 240px !important;     border: 1px dashed;
+            "
+            alt="example"
+            [src]="selectUser['id-backurl']"
+          />
+        </ng-template>
+      </div>
+    </div>
   </div>
 </nz-modal>

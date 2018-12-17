@@ -36,3 +36,16 @@
   margin-left: 1rem;
   font-family: serif;
 }
+
+// 这个专门放置身份证的时候的控制
+.ant-card-cover {
+  margin-top: 5px;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  max-height: 250px;
+  min-height: 250px;
+}

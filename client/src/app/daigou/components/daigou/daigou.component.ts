@@ -1,7 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { DgAddToBuyAction, DgUpdateContactAction } from '../../store/daigou.actions';
+import {
+  DgAddToBuyAction,
+  DgUpdateContactAction
+} from '../../store/daigou.actions';
 
 import * as _ from 'lodash';
 import { NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
@@ -246,10 +249,12 @@ export class DaigouComponent implements OnInit {
       })
     );
     this.isUPIDVisible = false;
+    this.selectUser = null;
   }
 
   handleUPIDCancel(): void {
     console.log('Button cancel clicked!');
     this.isUPIDVisible = false;
+    this.selectUser = null;
   }
 }
