@@ -38,7 +38,7 @@ export class DaigouService {
    * @param selectUser 传进来的值传递的 User
    * @param filetype 根据传进来的 type 来抓取存储路径
    */
-  downloadFile(selectUser, filetype) {
+  downloadFile(selectUser, filetype, status: any) {
     // Create a reference to the file we want to download
     const starsRef = this.coreService
       .fireStorage()
@@ -51,6 +51,7 @@ export class DaigouService {
         // Insert url into an <img> tag to "download"
         console.log('image: ', url);
         selectUser[filetype + 'url'] = url;
+        status[filetype] = false;
         // return url;
       })
       .catch(function(error) {

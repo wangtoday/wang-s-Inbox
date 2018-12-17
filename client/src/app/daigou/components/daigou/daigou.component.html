@@ -168,11 +168,24 @@
     </nz-button-group>
     <div style="margin-top:10px"></div>
     <!-- 预览身份证 -->
-    <div nz-row nzGutter="16" *ngIf="selectUser['id-fronturl']">
+    <div nz-row nzGutter="16">
       <div nz-col nzSpan="12" style="text-align:center">
         <!-- style="width:240px" -->
 
-        <nz-card nzHoverable [nzCover]="frontendIDtemplate">
+        <ng-template #indicatorTemplate
+          ><i nz-icon type="loading" style="font-size: 24px;"></i>
+        </ng-template>
+        <nz-spin
+          [nzIndicator]="indicatorTemplate"
+          *ngIf="loadingID['id-front']"
+        >
+        </nz-spin>
+
+        <nz-card
+          nzHoverable
+          [nzCover]="frontendIDtemplate"
+          *ngIf="selectUser['id-fronturl']"
+        >
           <nz-card-meta nzTitle="身份证正面"></nz-card-meta>
         </nz-card>
         <ng-template #frontendIDtemplate>
@@ -181,11 +194,22 @@
             "
             alt="example"
             [src]="selectUser['id-fronturl']"
-          />
+
+            (load)="loaded('font')"/>
         </ng-template>
       </div>
       <div nz-col nzSpan="12" style="text-align:center">
-        <nz-card nzHoverable [nzCover]="backendIDtemplate">
+        <ng-template #indicatorTemplate
+          ><i nz-icon type="loading" style="font-size: 24px;"></i>
+        </ng-template>
+        <nz-spin [nzIndicator]="indicatorTemplate" *ngIf="loadingID['id-back']">
+        </nz-spin>
+
+        <nz-card
+          nzHoverable
+          [nzCover]="backendIDtemplate"
+          *ngIf="selectUser['id-backurl']"
+        >
           <nz-card-meta nzTitle="身份证反面"></nz-card-meta>
         </nz-card>
         <ng-template #backendIDtemplate>

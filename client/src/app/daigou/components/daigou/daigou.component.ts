@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import {
@@ -7,14 +7,8 @@ import {
 } from '../../store/daigou.actions';
 
 import * as _ from 'lodash';
-import { NzMessageService, UploadXHRArgs } from 'ng-zorro-antd';
-import {
-  HttpClient,
-  HttpRequest,
-  HttpEventType,
-  HttpEvent,
-  HttpResponse
-} from '@angular/common/http';
+import { NzMessageService } from 'ng-zorro-antd';
+import { HttpClient } from '@angular/common/http';
 import { DaigouService } from '../../services/daigou.service';
 
 @Component({
@@ -91,6 +85,11 @@ export class DaigouComponent implements OnInit {
   selectFile: any;
   selectUser: any;
   selectIndex: any;
+
+  loadingID = {
+    'id-front': false,
+    'id-back': false
+  };
   /**
    *
    * @param event file Info
@@ -99,6 +98,7 @@ export class DaigouComponent implements OnInit {
    */
   detectFiles(event, filetype) {
     console.log(filetype, this.selectUser.name, this.selectIndex);
+    this.loadingID[filetype] = true;
     this.daigouService
       .uploadFile(event.target.files[0], this.selectUser.name + filetype)
       .then(value => {
@@ -106,11 +106,12 @@ export class DaigouComponent implements OnInit {
         // this return is the path which can be display to the frontend side
         // also need to get the link store into the user obj as well
         this.selectUser[filetype + 'path'] = value;
-        this.daigouService.downloadFile(this.selectUser, filetype);
-
-        setTimeout(() => {
-          console.log(this.selectUser);
-        }, 5000);
+        // 下面这个就是值传递, 就是传递了值过去, 并不影响整个程序的进行
+        this.daigouService.downloadFile(
+          this.selectUser,
+          filetype,
+          this.loadingID
+        );
       });
   }
   demoUpload(element) {
@@ -132,6 +133,10 @@ export class DaigouComponent implements OnInit {
 
   toggleaddColStatus(event) {
     this.addColStatus = event;
+  }
+
+  loaded(type) {
+    console.log('type: ', type);
   }
 
   /**
