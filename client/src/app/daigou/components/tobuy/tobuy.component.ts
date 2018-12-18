@@ -121,6 +121,8 @@ export class TobuyComponent implements OnInit {
           this.buyerlist = _.uniqBy(this.buyerlist, 'text');
         }
         this.loading = false;
+      } else {
+        this.displayData = [];
       }
       // });
     });
