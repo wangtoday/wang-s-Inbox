@@ -238,7 +238,7 @@ export class DaigouService {
     const daigouRef$ = from(
       daigouRef
         .where('userid', '==', userid)
-        .orderBy('createAt', 'desc')
+        // .orderBy('createAt', 'desc')
         .get()
     );
 

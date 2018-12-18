@@ -9,6 +9,8 @@ import { AuthStatusCheckAction } from 'src/app/auth/store/auth.actions';
   styleUrls: ['./containers.component.css']
 })
 export class ContainersComponent implements OnInit {
+
+  // 验证的地方在 header 这个地方,  吊得很
   constructor(public store: Store<AuthState>) {}
 
   ngOnInit() {
